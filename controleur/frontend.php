@@ -1,5 +1,5 @@
 <?php
 
-require('view/frontend/homeView.php');
+echo $twig->render('homeView.twig', array('titre' => 'Ballinity-Code'));
 
 
