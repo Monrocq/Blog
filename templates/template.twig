@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?= $title ?></title>
+    <title>{{ titre }}</title>
 
     <!-- CSS Perso -->
     <link href="public/css/custom.css" rel="stylesheet">
@@ -73,7 +73,9 @@
     </nav>
 
 
-    <?= $content ?>
+    {% block content %}
+
+    {% endblock %}}
 
     
     <!-- Footer -->

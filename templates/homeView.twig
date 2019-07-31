@@ -1,7 +1,6 @@
-  <?php $title = 'Ballinity-Code' ?>
+{% extends "template.twig" %}
 
-  <?php ob_start(); ?>
-  
+{% block content %}
 
     <!-- Header -->
     <header>
@@ -189,8 +188,6 @@
         </div>
     </section>
 
-    <?php $content = ob_get_clean(); ?>
-
-    <?php require('template.php'); ?>
+  {% endblock %}
 
 
