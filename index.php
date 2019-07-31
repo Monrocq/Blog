@@ -15,15 +15,20 @@ Autoloader::register();
 //Page d'accueil
 require('controleur/frontend.php');
 
-if (isset($_GET['page'])) {
-    $page = $_GET['page'];
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    if (isset($_GET['page'])) {
+        $page = $_GET['page'];
+    } else {
+        $page = 1;
+    }
 } else {
-    $page = 'accueil';
+    $action = 'accueil';
 }
 
-switch ($page) {
+switch ($action) {
     case 'articles':
-        liste($twig);
+        liste($twig, $page);
         break;
     default:
         accueil($twig);

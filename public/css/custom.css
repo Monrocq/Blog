@@ -1,5 +1,7 @@
 /* CSS Personnalisé */
 
+/* template */
+
 #logo {
     border-radius: 50%;
     max-width: 30%;
@@ -13,6 +15,8 @@
 #blog-btn a {
     color: #2C3E50;
 }
+
+/* accueil */
 
 #cv-btn {
     color: #18BC9C;
@@ -30,4 +34,30 @@
     color: white;
     background:#18BC9C;
     border:2px solid #18BC9C
+}
+
+/* Liste Articles */
+
+#blog-title {
+    background-color: #2C3E50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+#numerotation-pages {
+    margin-left: 40px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.num-page {
+    display: inline-block;
+    border: solid black 1px;
+    padding: 10px 15px;
+}
+
+.lirelasuite {
+    font-weight: bold;
 }
