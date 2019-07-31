@@ -1,0 +1,21 @@
+{% extends "template.twig" %}
+
+{% block content %}
+
+<ul>
+{% for article in articles %}
+    <br>
+    <li>{{ article.title }}</li>
+    <li>{{ article.chapo }}</li>
+    <li>
+    {% if article.last_maj == null %}
+        {{ article.date_ajout }}
+    {% else %}
+        {{ article.last_maj}}
+    {% endif %}
+    </li>
+    <br>
+{% endfor %}
+</ul>
+
+{% endblock %}
