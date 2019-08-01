@@ -32,7 +32,7 @@ try {
    $mail->Host       = 'smtp.free.fr';  // Specify main and backup SMTP servers
    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
    $mail->Username   = 'indian.express@free.fr';                     // SMTP username
-   $mail->Password   = 'TMG3.DLS';                               // SMTP password
+   $mail->Password   = '********';                               // SMTP password
    $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
    $mail->Port       = 465;   
 
