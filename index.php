@@ -9,7 +9,7 @@ $twig = new Twig_Environment($loader, ['cache' => false, 'debug'=>true]);
 $twig->addExtension(new Twig_Extension_Debug);
 
 //Autoloader des classes
-require('vendor/autoloader.php');
+require('autoloader.php');
 Autoloader::register();
 
 //Page d'accueil
