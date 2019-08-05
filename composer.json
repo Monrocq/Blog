@@ -2,7 +2,10 @@
     "name": "vendor/composer",
     "require": {
         "phpmailer/phpmailer": "~6.0",
-        "twig/twig": "^2.11"
+        "twig/twig": "^2.11",
+        "twitter/bootstrap": "v3.3.7",
+        "fortawesome/font-awesome": "v4.6.3",
+        "components/jquery": "1.12.4"
     },
     "authors": [
         {

@@ -10,13 +10,13 @@
     <ul>
     {% for article in articles %}
         <br><li>
-        <h3>{{ article.title }}</h3>
-        <h4>{{ article.chapo }}</h4>
+        <h3>{{ article.get_title() }}</h3>
+        <h4>{{ article.get_chapo() }}</h4>
         <em> Dernière mise à jour le :
-        {% if article.last_maj == null %}
-            {{ article.date_ajout }}
+        {% if article.get_lastupdated() == null %}
+            {{ article.get_dateadded() }}
         {% else %}
-            {{ article.last_maj}}
+            {{ article.lastupdated() }}
         {% endif %}
         </em></li>
         <a href="#" class="lirelasuite">Lire la suite...</a>

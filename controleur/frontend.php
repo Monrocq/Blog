@@ -7,15 +7,12 @@ function accueil($twig)
 
 function liste($twig, $page) 
 {
-    $list = new liste;
-
-    $articles = $list->getList($page);
-
-    $nbarticles = $list->getNbArticles();
-    $nbarticles = (int)$nbarticles[0];
+    $postMapper = new PostManager;
+    $articles = $postMapper->getList($page);
+    $nbarticles = $postMapper->getNbArticles();
     $numpage = 0;
     $pages = array();
-    for ($i = $nbarticles; $i > 0; $i -= 5) {
+    for ($i = (int)$nbarticles[0]; $i > 0; $i -= 5) {
         $numpage++;
         $pages[] = $numpage;
     }
