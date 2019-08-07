@@ -14,69 +14,69 @@ class Post {
         $this->hydrate($id, $title, $chapo, $content, $author, $dateadded, $lastupdated);
     }
 
-    public function get_id(){
+    public function getId(){
 		return $this->_id;
 	}
 
-	public function set_id($_id){
+	public function setId($_id){
 		$this->_id = $_id;
 	}
 
-	public function get_title(){
+	public function getTitle(){
 		return $this->_title;
 	}
 
-	public function set_title($_title){
+	public function setTitle($_title){
 		$this->_title = $_title;
 	}
 
-	public function get_chapo(){
+	public function getChapo(){
 		return $this->_chapo;
 	}
 
-	public function set_chapo($_chapo){
+	public function setChapo($_chapo){
 		$this->_chapo = $_chapo;
 	}
 
-	public function get_content(){
+	public function getContent(){
 		return $this->_content;
 	}
 
-	public function set_content($_content){
+	public function setContent($_content){
 		$this->_content = $_content;
 	}
 
-	public function get_author(){
+	public function getAuthor(){
 		return $this->_author;
 	}
 
-	public function set_author($_author){
+	public function setAuthor($_author){
 		$this->_author = $_author;
 	}
 
-	public function get_dateadded(){
+	public function getDateAdded(){
 		return $this->_dateadded;
 	}
 
-	public function set_dateadded($_dateadded){
+	public function setDateAdded($_dateadded){
 		$this->_dateadded = $_dateadded;
 	}
 
-	public function get_lastupdated(){
+	public function getLastUpdated(){
 		return $this->_lastupdated;
 	}
 
-	public function set_lastupdated($_lastupdated){
+	public function setLastUpdated($_lastupdated){
 		$this->_lastupdated = $_lastupdated;
     }
     
     protected function hydrate($id, $title, $chapo, $content, $author, $dateadded, $lastupdated) {
-        $this->set_id($id);
-        $this->set_title($title);
-        $this->set_chapo($chapo);
-        $this->set_content($content);
-        $this->set_author($author);
-        $this->set_dateadded($dateadded);
-        $this->set_lastupdated($lastupdated);
+        $this->setId($id);
+        $this->setTitle($title);
+        $this->setChapo($chapo);
+        $this->setContent($content);
+        $this->setAuthor($author);
+        $this->setDateAdded($dateadded);
+        $this->setLastUpdated($lastupdated);
     }
 }
