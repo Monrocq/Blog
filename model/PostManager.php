@@ -31,4 +31,20 @@ class PostManager {
         return $nb->fetch();
     }
 
+    public function getArticle ($id) {
+        $req = $this->db->req(
+            "SELECT posts.id, posts.title, posts.chapo, posts.content, posts.date_added, posts.last_updated, users.nickname 
+            FROM posts JOIN users ON posts.author = users.id WHERE posts.id = $id");
+        $article = $req->fetch();
+        $obj = new Post(
+            $article['id'],
+            $article['title'],
+            $article['chapo'],
+            $article['content'],
+            $article['nickname'],
+            $article['date_added'],
+            $article['last_updated']);
+        return $obj;
+    }
+
 }

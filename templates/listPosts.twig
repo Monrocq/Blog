@@ -3,7 +3,7 @@
 {% block content %}
 
 <div id="blog-title">
-    <h2>Articles</h2>
+    <h1>Articles</h1>
 </div>
 
 <div class="container">
@@ -19,7 +19,7 @@
             {{ article.getLastUpdated() }}
         {% endif %}
         </em></li>
-        <a href="#" class="lirelasuite">Lire la suite...</a>
+        <a href="index.php?action=single&id={{ article.getId() }}&page={{page}}" class="lirelasuite">Lire la suite...</a>
         <br>
     {% endfor %}
     <br></ul>

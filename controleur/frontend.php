@@ -17,7 +17,14 @@ function liste($twig, $page)
         $pages[] = $numpage;
     }
 
-    echo $twig->render('listPosts.twig', array('titre' => 'Ballinity - Articles', 'articles' => $articles, 'pages' => $pages));
+    echo $twig->render('listPosts.twig', array('titre' => 'Ballinity - Articles', 'articles' => $articles, 'pages' => $pages, 'page' => $page));
+}
+
+function single($twig, $id, $page)
+{
+    $postMapper = new PostManager;
+    $article = $postMapper->getArticle($id);
+    echo $twig->render('singlePost.twig', array('article' => $article, 'page' => $page));
 }
 
 
