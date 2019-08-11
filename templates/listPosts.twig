@@ -1,0 +1,35 @@
+{% extends "template.twig" %}
+
+{% block content %}
+
+<div id="blog-title">
+    <h2>Articles</h2>
+</div>
+
+<div class="container">
+    <ul>
+    {% for article in articles %}
+        <br><li>
+        <h3>{{ article.getTitle() }}</h3>
+        <h4>{{ article.getChapo() }}</h4>
+        <em> Dernière mise à jour le :
+        {% if article.getLastUpdated() == null %}
+            {{ article.getDateAdded() }}
+        {% else %}
+            {{ article.getLastUpdated() }}
+        {% endif %}
+        </em></li>
+        <a href="#" class="lirelasuite">Lire la suite...</a>
+        <br>
+    {% endfor %}
+    <br></ul>
+
+    <div id="numerotation-pages">
+    Pages :
+    {% for page in pages %}
+        <a href="index.php?action=articles&page={{page}}" class="num-page">{{page}}</a>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
