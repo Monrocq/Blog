@@ -61,3 +61,31 @@
 .lirelasuite {
     font-weight: bold;
 }
+
+/* Single Article */
+
+#single {
+    margin: 35px auto;
+}
+
+#single h2 {
+    margin-left: 40px;
+    font-size: 2.5em;
+    font-weight: 900;
+    text-decoration: underline;
+}
+
+#single p {
+    font-size: 1.5rem;
+}
+
+#maj {
+    text-align: right;
+}
+
+#author {
+    text-align: right;
+    font-size: 1.7rem;
+    text-decoration: underline;
+    font-style: italic;
+}

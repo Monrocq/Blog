@@ -22,6 +22,11 @@ if (isset($_GET['action'])) {
     } else {
         $page = 1;
     }
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+    } else {
+        $id = '0';
+    }
 } else {
     $action = 'accueil';
 }
@@ -29,6 +34,9 @@ if (isset($_GET['action'])) {
 switch ($action) {
     case 'articles':
         liste($twig, $page);
+        break;
+    case 'single':
+        single($twig, $id, $page);
         break;
     default:
         accueil($twig);
