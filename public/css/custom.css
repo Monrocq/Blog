@@ -89,3 +89,54 @@
     text-decoration: underline;
     font-style: italic;
 }
+
+/* Single articles Comments */
+
+#comment-box {
+    border: solid;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+#h3-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#comment-title {
+    text-decoration: underline;
+    margin-left: 20px;
+    display: inline-block;
+}
+
+#btn-add {
+    text-align: right;
+    display: inline-block;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+textarea {
+    width: 100%;
+}
+
+input {
+    margin-top: 10px !important;
+}
+
+#comments h5, #comments h6 {
+    display: inline-block;
+    margin: auto 20px;
+    text-decoration: underline;
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+}
+

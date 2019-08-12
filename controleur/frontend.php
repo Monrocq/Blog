@@ -24,7 +24,22 @@ function single($twig, $id, $page)
 {
     $postMapper = new PostManager;
     $article = $postMapper->getArticle($id);
-    echo $twig->render('singlePost.twig', array('article' => $article, 'page' => $page));
+    $comments = $postMapper->getComments($id);
+    echo $twig->render('singlePost.twig', array('article' => $article, 'page' => $page, 'comments' => $comments, 'id' => $id));
 }
 
+function addComment($id, $content) 
+{
+    $postMapper = new PostManager;
+    $postMapper->addComment($id, $content);
+    header("Location: index.php?action=single&id=$id");
+}
+
+function deleteComment($id, $comment)
+{
+    $postMapper = new PostManager;
+    $delete = $postMapper->deleteComment($comment);
+    header("Location: index.php?action=single&id=$id");
+    //var_dump($delete);
+}
 

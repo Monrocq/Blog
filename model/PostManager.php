@@ -47,4 +47,33 @@ class PostManager {
         return $obj;
     }
 
+    public function getComments($post) {
+        $listing = $this->db->req(
+            "SELECT comments.id, comments.author, comments.post, comments.content, comments.date_added, comments.last_maj, users.nickname 
+            FROM comments JOIN users ON comments.author = users.id WHERE comments.post = $post");
+        $comments = array();
+        foreach ($listing as $key => $dataRow) {
+            $commentObject = new Comment(
+                $dataRow['id'],
+                $dataRow['post'],
+                $dataRow['nickname'],
+                $dataRow['date_added'],
+                $dataRow['content']);
+            $comments[] = $commentObject;
+        }
+        return $comments;
+    }
+
+    public function addComment($post, $content) {
+        $reqadd = $this->db->req(
+            "INSERT INTO comments(author, post, content, date_added) VALUES (1, $post, '$content', CURRENT_TIMESTAMP)");
+        return $reqadd;
+    }
+
+    public function deleteComment($comment) {
+        $reqdelete = $this->db->req(
+            "DELETE FROM comments WHERE id=$comment");
+        return $reqdelete;
+    }
+
 }

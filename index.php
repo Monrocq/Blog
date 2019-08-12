@@ -38,6 +38,14 @@ switch ($action) {
     case 'single':
         single($twig, $id, $page);
         break;
+    case 'addcomment':
+        $content = $_POST['content'];
+        addComment($id, $content);
+        break;
+    case 'deletecomment':
+        $comment = $_GET['comment'];
+        deleteComment($id, $comment);
+        break;
     default:
         accueil($twig);
 }

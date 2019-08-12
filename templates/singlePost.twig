@@ -6,19 +6,56 @@
     <h3><a href="index.php?action=articles&page={{page}}">Retour aux articles</a></h3>
 </div>
 
-<div class="container" id="single">
-    <div id="maj"><em> Article mis à jour le :
-        {% if article.getLastUpdated() == null %}
-            {{ article.getDateAdded() }}
-        {% else %}
-            {{ article.getLastUpdated() }}
-        {% endif %}
-    </em></div>
-    <h2> {{ article.getTitle }} </h2>
-    <h3> {{ article.getChapo }} <h3>
-    <hr>
-    <p> {{ article.getContent }} </p><br>
-    <div id="author"> Auteur : {{ article.getAuthor }} </div>
+<div class="container">
+    <div id="single">
+        <div id="maj"><em> Article mis à jour le :
+            {% if article.getLastUpdated() == null %}
+                {{ article.getDateAdded() }}
+            {% else %}
+                {{ article.getLastUpdated() }}
+            {% endif %}
+        </em></div>
+        <h2> {{ article.getTitle }} </h2>
+        <h3> {{ article.getChapo }} <h3>
+        <hr>
+        <p> {{ article.getContent }} </p><br>
+        <div id="author"> Auteur : {{ article.getAuthor }} </div>
+    </div>
+    <br>
+    <div id="comment-box">
+        <h3 id="h3-head"><span id="comment-title">Commentaires</span>
+        <a class="btn btn-primary btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="btn-add">
+        Ajouter un commentaire
+        </a></h3>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <label for="comment">Votre commentaire : </label>
+                    <form method="post" action="index.php?action=addcomment&id={{id}}">
+                    <br>
+                        <textarea name="content" id="comment">Test</textarea>
+                        <input type="submit" value="Envoyer" />
+                    </form>
+            </div>
+        </div>
+        <div id="comments">
+        {% for comment in comments %}
+        <hr>
+        <div class="comment">
+        <div>
+        <h5>Auteur : {{ comment.getAuthor }}</h5>
+        <h6>Le : {{ comment.getDate }}</h6>
+        <p>{{ comment.getContent }}</p>
+        </div>
+        <div>
+            <a class="btn btn-danger" href="index.php?action=deletecomment&comment={{comment.getId}}&id={{id}}">
+                Supprimer le commentaire
+            </a>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
 </div>
+
 
 {% endblock %}
