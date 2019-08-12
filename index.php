@@ -19,9 +19,17 @@ if (isset($_GET['action'])) {
     $action = $_GET['action'];
     if (isset($_GET['page'])) {
         $page = $_GET['page'];
+    } elseif (isset($_COOKIE['page'])) {
+        $page = $_COOKIE['page'];
     } else {
         $page = 1;
     }
+    if (isset($_GET['commentpage'])) {
+        $commentpage = $_GET['commentpage'];
+    } else {
+        $commentpage = 1;
+    }
+    //$id = l'id du Post
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
     } else {
@@ -36,7 +44,7 @@ switch ($action) {
         liste($twig, $page);
         break;
     case 'single':
-        single($twig, $id, $page);
+        single($twig, $id, $page, $commentpage);
         break;
     case 'addcomment':
         $content = $_POST['content'];
@@ -46,6 +54,10 @@ switch ($action) {
         $comment = $_GET['comment'];
         deleteComment($id, $comment);
         break;
+    case 'updatecomment':
+        $comment = $_GET['comment'];
+        $content = $_POST['content'];
+        updateComment($id, $comment, $content);
     default:
         accueil($twig);
 }

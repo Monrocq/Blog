@@ -27,8 +27,13 @@ class PostManager {
     }
 
     public function getNbArticles () {
-        $nb = $this->db->req('SELECT COUNT(*) FROM posts');
-        return $nb->fetch();
+        $numbarticles = $this->db->req('SELECT COUNT(*) FROM posts');
+        return $numbarticles->fetch();
+    }
+
+    public function getNbComments($id) {
+        $numbcomments = $this->db->req("SELECT COUNT(*) FROM comments WHERE post=$id");
+        return $numbcomments->fetch();
     }
 
     public function getArticle ($id) {
@@ -47,10 +52,11 @@ class PostManager {
         return $obj;
     }
 
-    public function getComments($post) {
+    public function getComments($post, $commentpage) {
+        $offset = $commentpage * 5 - 5;
         $listing = $this->db->req(
             "SELECT comments.id, comments.author, comments.post, comments.content, comments.date_added, comments.last_maj, users.nickname 
-            FROM comments JOIN users ON comments.author = users.id WHERE comments.post = $post");
+            FROM comments JOIN users ON comments.author = users.id WHERE comments.post = $post LIMIT 5 OFFSET $offset");
         $comments = array();
         foreach ($listing as $key => $dataRow) {
             $commentObject = new Comment(
@@ -64,6 +70,20 @@ class PostManager {
         return $comments;
     }
 
+    //Pour les liens Ancre des modif' et suppr
+    public function commentExists($comment) {
+        $commentExists = $this->db->req(
+            "SELECT * FROM comments WHERE id=$comment");
+        return $commentExists;
+    }
+
+    //pour les liens Ancre des Ajouts
+    public function lastComment($id) {
+        $lastComment = $this->db->req(
+            "SELECT id FROM comments WHERE post=$id ORDER BY id DESC");
+        return $lastComment->fetch();
+    }
+
     public function addComment($post, $content) {
         $reqadd = $this->db->req(
             "INSERT INTO comments(author, post, content, date_added) VALUES (1, $post, '$content', CURRENT_TIMESTAMP)");
@@ -74,6 +94,12 @@ class PostManager {
         $reqdelete = $this->db->req(
             "DELETE FROM comments WHERE id=$comment");
         return $reqdelete;
+    }
+
+    public function updateComment($comment, $content) {
+        $requpdate = $this->db->req(
+            "UPDATE comments SET content='$content' WHERE id=$comment");
+        return $requpdate;
     }
 
 }

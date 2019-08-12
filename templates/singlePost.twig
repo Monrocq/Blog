@@ -24,20 +24,25 @@
     <br>
     <div id="comment-box">
         <h3 id="h3-head"><span id="comment-title">Commentaires</span>
+        <!-- Bonton ajout -->
         <a class="btn btn-primary btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="btn-add">
         Ajouter un commentaire
         </a></h3>
+        <!-- Modal Ajout -->
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
                 <label for="comment">Votre commentaire : </label>
                     <form method="post" action="index.php?action=addcomment&id={{id}}">
                     <br>
-                        <textarea name="content" id="comment">Test</textarea>
+                        <textarea name="content" id="comment"></textarea>
                         <input type="submit" value="Envoyer" />
                     </form>
             </div>
         </div>
         <div id="comments">
+        {% if comments == false %}
+        Aucun commentaires pour le moment <br><strong>Soyez le premier à commenter! </strong>
+        {% endif %}
         {% for comment in comments %}
         <hr>
         <div class="comment">
@@ -46,13 +51,35 @@
         <h6>Le : {{ comment.getDate }}</h6>
         <p>{{ comment.getContent }}</p>
         </div>
-        <div>
+        <div class="btn-comment">
+            <!-- Bouton modif' -->
+            <a class="btn btn-warning" data-toggle="collapse" href="#collapseModif{{comment.getId}}" role="button" aria-expanded="false" aria-controls="collapseModif{{comment.getId}}" id="comment{{comment.getId}}">
+            Modifier le commentaire
+            </a>
+            <!-- Bonton suppression -->
             <a class="btn btn-danger" href="index.php?action=deletecomment&comment={{comment.getId}}&id={{id}}">
                 Supprimer le commentaire
             </a>
         </div>
         </div>
+        <!-- Modal Modif' -->
+            <div class="collapse" id="collapseModif{{comment.getId}}">
+                <div class="card card-body">
+                    <label for="comment">Votre commentaire : </label>
+                        <form method="post" action="index.php?action=updatecomment&id={{id}}&comment={{comment.getId}}">
+                        <br>
+                            <textarea name="content" id="comment">{{comment.getContent}}</textarea>
+                            <input type="submit" value="Envoyer" />
+                        </form>
+                </div>
+            </div>
         {% endfor %}
+        </div>
+        <div id="numerotation-pages">
+            Pages :
+            {% for page in pages %}
+                <a href="index.php?action=single&commentpage={{page}}&id={{article.getId}}" class="num-page">{{page}}</a>
+            {% endfor %}
         </div>
     </div>
 </div>

@@ -129,6 +129,10 @@ input {
     margin-top: 10px !important;
 }
 
+#comments {
+    margin-bottom: 20px;
+}
+
 #comments h5, #comments h6 {
     display: inline-block;
     margin: auto 20px;
@@ -138,5 +142,14 @@ input {
 .comment {
     display: flex;
     justify-content: space-between;
+}
+
+.btn-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-comment a {
+    margin: 2px;
 }
 
