@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 //Chargement des librairies
 require('vendor/autoload.php');
@@ -7,6 +8,7 @@ require('vendor/autoload.php');
 $loader = new Twig_Loader_Filesystem('templates');
 $twig = new Twig_Environment($loader, ['cache' => false, 'debug'=>true]);
 $twig->addExtension(new Twig_Extension_Debug);
+$twig->addGlobal('session', $_SESSION);
 
 //Autoloader des classes
 require('autoloader.php');
@@ -60,6 +62,22 @@ switch ($action) {
         $comment = $_GET['comment'];
         $content = $_POST['content'];
         updateComment($id, $comment, $content);
+        break;
+    case 'authentification':
+        authentification($twig);
+        break;
+    case 'verification':
+        $nickname = $_POST['nickname'];
+        $mdp = $_POST['mdp'];
+        verification($twig, $nickname, $mdp);
+        break;
+    case 'deconnexion':
+        deconnexion();
+        break;
+    case 'connected':
+        $connected = "connected";
+        accueil($twig, $connected);
+        break;
     default:
         accueil($twig);
 }

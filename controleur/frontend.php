@@ -1,8 +1,29 @@
 <?php
 
-function accueil($twig) 
+function accueil($twig, $connected = "not") 
 {
-    echo $twig->render('homeView.twig', array('titre' => 'Ballinity - Home'));
+    echo $twig->render('homeView.twig', array('titre' => 'Ballinity - Home', 'connected' => $connected));
+}
+
+function authentification($twig)
+{
+    echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'standby'));
+}
+
+function verification($twig, $nickname, $mdp)
+{
+    $pwd = new Session($nickname, $mdp);
+    if ($_SESSION['connected'] === true) {
+        header('Location: index.php');
+    } else {
+        echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'fail'));
+    }
+}
+
+function deconnexion()
+{
+    session_destroy();
+    header('Location: index.php');
 }
 
 function liste($twig, $page = 1) 
@@ -37,7 +58,7 @@ function single($twig, $id, $page = 1, $commentpage)
     $comments = $article->getComments($commentpage);
     $nbcomments = $article->getNbComments();
     $pages = pagination($nbcomments[0]);
-    echo $twig->render('singlePost.twig', array('article' => $article, 'page' => $page, 'comments' => $comments, 'id' => $id, 'pages' => $pages, 'commentpage' => $commentpage));
+    echo $twig->render('singlePost.twig', array('titre' => 'Ballinity - '.$article->getTitle(), 'article' => $article, 'page' => $page, 'comments' => $comments, 'id' => $id, 'pages' => $pages, 'commentpage' => $commentpage));
 }
 
 function addComment($id, $content) 

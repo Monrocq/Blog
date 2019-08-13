@@ -12,8 +12,28 @@
     /* background-color: white; */
 }
 
+/* Header */
+
 #blog-btn a {
     color: #2C3E50;
+}
+
+#status {
+    font-size: 0.8em;
+    color: #18BC9C;
+}
+
+#status #connected {
+    color: #18BC9C;
+}
+
+#status span {
+    text-decoration: underline;
+    color: red;
+}
+
+#status span:hover {
+    color: pink;
 }
 
 /* accueil */
@@ -115,7 +135,7 @@
     display: inline-block;
 }
 
-form {
+#comment-box form {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -125,7 +145,7 @@ textarea {
     width: 100%;
 }
 
-input {
+#comment-box input {
     margin-top: 10px !important;
 }
 
@@ -151,5 +171,35 @@ input {
 
 .btn-comment a {
     margin: 2px;
+}
+
+/* Authentification */
+
+.mb-0 button {
+    font-weight: bold;
+}
+
+#authentification form {
+    margin: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#authentification form div {
+    margin: auto 20px;
+}
+
+#authentification input {
+    margin: 10px;
+}
+
+#state {
+    display: flex;
+    justify-content: space-between;
+}
+
+#state p {
+    font-size: 1em;
+    margin-left: 50px;
 }
 
