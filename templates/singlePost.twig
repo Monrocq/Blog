@@ -78,7 +78,13 @@
         <div id="numerotation-pages">
             Pages :
             {% for page in pages %}
-                <a href="index.php?action=single&commentpage={{page}}&id={{article.getId}}" class="num-page">{{page}}</a>
+                <a href="index.php?action=single&commentpage={{page}}&id={{article.getId}}" class="num-page">
+                    {% if page == commentpage %}
+                        <strong>{{page}}</strong>
+                    {% else %}
+                        <em>{{page}}</em>
+                    {% endif %}
+                </a>
             {% endfor %}
         </div>
     </div>

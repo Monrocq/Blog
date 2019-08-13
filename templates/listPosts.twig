@@ -26,8 +26,14 @@
 
     <div id="numerotation-pages">
     Pages :
-    {% for page in pages %}
-        <a href="index.php?action=articles&page={{page}}" class="num-page">{{page}}</a>
+    {% for Page in pages %}
+        <a href="index.php?action=articles&page={{Page}}" class="num-page">
+        {% if Page == page %}
+            <strong>{{Page}}</strong>
+        {% else %}
+            <em>{{Page}}</em>
+        {% endif %}
+        </a>
     {% endfor %}
     </div>
 </div>

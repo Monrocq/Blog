@@ -26,6 +26,8 @@ if (isset($_GET['action'])) {
     }
     if (isset($_GET['commentpage'])) {
         $commentpage = $_GET['commentpage'];
+    } elseif (isset($_COOKIE['commentpage'])) {
+        $commentpage = $_COOKIE['commentpage'];
     } else {
         $commentpage = 1;
     }

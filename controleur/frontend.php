@@ -31,47 +31,55 @@ function pagination($nb) {
 function single($twig, $id, $page = 1, $commentpage)
 {
     setcookie('page', $page); //Pour éviter de se trimbaler $page à chaque fois qu'on CRUD un commentaire
+    setcookie('commentpage', $commentpage);
     $postMapper = new PostManager;
     $article = $postMapper->getArticle($id);
-    $comments = $postMapper->getComments($id, $commentpage);
-    $nbcomments = $postMapper->getNbComments($id);
+    $comments = $article->getComments($commentpage);
+    $nbcomments = $article->getNbComments();
     $pages = pagination($nbcomments[0]);
     echo $twig->render('singlePost.twig', array('article' => $article, 'page' => $page, 'comments' => $comments, 'id' => $id, 'pages' => $pages, 'commentpage' => $commentpage));
 }
 
 function addComment($id, $content) 
 {
-    $postMapper = new PostManager;
-    $postMapper->addComment($id, $content);
-    $hashtag = $postMapper->lastComment($id);
-    header("Location: index.php?action=single&id=$id#comment$hashtag[0]");
+    $commentMapper = new CommentManager;
+    $type = 'add';
+    $commentMapper->addComment($id, $content);
+    $hashtag = $commentMapper->lastComment($id);
+    $urlcomment = urlcomment($id, $hashtag[0], $type);
+    setcookie('commentpage', 1);
+    header($urlcomment);
 }
 
 //URL de redirection après modif' ou suppression
-function urlcomment($id, $comment) {
-    $postMapper = new PostManager;
-    $comment--;
-    while ($postMapper->commentExists($comment)->fetch() == false) //Vu que l'autoincrémentation ne remplace pas les supprimés
-    {
-        $comment--; //Vu que la navbar est en fixe, il faut décaller
+function urlcomment($id, $comment, $type) {
+    $commentMapper = new CommentManager;
+    if ($type !== 'add') {
+        $comment++; //Vu que la navbar est en fixe, il faut décaller
+        while ($commentMapper->commentExists($comment, $id)->fetch() == false) //Afin de s'assurer de tomber sur un bon ID
+        {
+            $comment++; 
+        }
     }
     return "Location: index.php?action=single&id=$id#comment$comment";
 }
 
 function deleteComment($id, $comment)
 {
-    $postMapper = new PostManager;
-    $delete = $postMapper->deleteComment($comment);
-    $urlcomment = urlcomment($id, $comment);
+    $commentMapper = new CommentManager;
+    $type = 'delete';
+    $delete = $commentMapper->deleteComment($comment);
+    $urlcomment = urlcomment($id, $comment, $type);
     header($urlcomment);
     //var_dump($delete);
 }
 
 function updateComment($id, $comment, $content)
 {
-    $postMapper = new PostManager;
-    $postMapper->updateComment($comment, $content);
-    $urlcomment = urlcomment($id, $comment);
+    $commentMapper = new CommentManager;
+    $type = 'delete';
+    $commentMapper->updateComment($comment, $content);
+    $urlcomment = urlcomment($id, $comment, $type='update');
     header($urlcomment);
 }
 
