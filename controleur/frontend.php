@@ -26,6 +26,28 @@ function deconnexion()
     header('Location: index.php');
 }
 
+function registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm)
+{
+    if ($password === $confirm) {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $db = new db;
+        $mailexists = $db->req("SELECT * FROM users WHERE email='$email'")->fetch();
+        if ($mailexists == false) {
+            $nickexists = $db->req("SELECT * FROM users WHERE nickname='$nickname'")->fetch();
+            if ($nickexists == false) {
+                $db->req("INSERT INTO users(name, firstname, nickname, email, password, lvl) VALUES ('$lastname', '$firstname', '$nickname', '$email', '$hash', '1')");
+                verification($twig, $nickname, $confirm);
+            } else {
+                echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'failed', 'failed' => 'nick'));
+            }
+        } else {
+            echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'failed', 'failed' => 'email'));
+        }
+    } else {
+        echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'failed', 'failed' => 'mdp'));
+    }
+}
+
 function liste($twig, $page = 1) 
 {
     $postMapper = new PostManager;

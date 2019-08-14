@@ -78,6 +78,15 @@ switch ($action) {
         $connected = "connected";
         accueil($twig, $connected);
         break;
+    case 'register':
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['surname'];
+        $nickname = $_POST['nickname'];
+        $email = $_POST['email'];
+        $password = $_POST['mdp'];
+        $confirm = $_POST['confirm'];
+        registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm);
+        break;
     default:
         accueil($twig);
 }
