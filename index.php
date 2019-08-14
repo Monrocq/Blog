@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+//Reglage de l'heure
+date_default_timezone_set('Europe/Paris');
+
 //Chargement des librairies
 require('vendor/autoload.php');
 
@@ -93,8 +96,9 @@ switch ($action) {
         forgot($twig, $email_address);
         break;
     case 'reset':
+        $key = $_GET['key'];
         $hashed = $_GET['hashed'];
-        resetpwd($twig, $hashed);
+        resetpwd($twig, $hashed, $key);
         break;
     case 'reseted':
         require('mail/forgot.php');

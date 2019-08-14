@@ -4,7 +4,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function sendforgot($email_address) {
+function sendforgot($email_address, $expiration) {
 
     // Load Composer's autoloader
     require 'vendor/autoload.php';
@@ -33,11 +33,14 @@ function sendforgot($email_address) {
     $mail->addCC('cc@example.com');
     $mail->addBCC('bcc@example.com');
 
+    //Création de la clé
+    $key = hash('sha256', $expiration);
+
     // Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Reinitialisation du mot de passe';
-    $url = "http://localhost/P5/Blog/index.php?action=reset&hashed={$req[0]}";
-    $mail->Body    = "Bonjour,<br><br>Veuillez cliquez sur ce lien pour réinitialiser votre mot de passe : <a href=\"$url\">$url</a><br><br>Cordialement.";
+    $url = "http://localhost/P5/Blog/index.php?action=reset&hashed={$req[0]}&key=$key";
+    $mail->Body    = "Bonjour <strong>{$req[1]}</strong>,<br><br>Veuillez cliquez sur ce lien pour réinitialiser votre mot de passe : <a href=\"$url\">$url</a><br>Attention il expirera dans deux heures!<br><br>Cordialement.";
     //$mail->AltBody = $message."\nNuméro de téléphone : $phone";
 
     //Encoding

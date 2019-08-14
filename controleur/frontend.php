@@ -60,16 +60,27 @@ function forgot($twig, $email)
     if ($exists == false) {
         echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'unknown'));
     } else {
-    sendforgot($email);
+    $datetime = new DateTime;
+    $datetime->setTimezone(new DateTimeZone('Europe/Paris'));
+    $datetime->add(new DateInterval('PT02H03M27S'));
+    $expiration = $datetime->format('Y-m-d H:i:s');
+    $db->req("UPDATE users SET reset='$expiration' WHERE email='$email'");
+    sendforgot($email, $expiration);
     echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'known'));
+    
     }
 }
 
-function resetpwd($twig, $hashed) 
+function resetpwd($twig, $hashed, $key) 
 {
     $db = new db;
     $name = $db->req("SELECT firstname, nickname FROM users WHERE password = '$hashed'")->fetch();
-    echo $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name[0], 'state' => 'standby', 'nickname' => $name[1]));
+    $expiration = $db->req("SELECT reset FROM users WHERE nickname='{$name[1]}'")->fetch();
+    if ((hash('sha256', $expiration[0]) == $key) && ($expiration[0] > date("Y-m-d H:i:s"))) {
+        echo $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name[0], 'state' => 'standby', 'nickname' => $name[1]));
+    } else {
+        echo "Oups, ce lien n'est plus valide";
+    }
 }
 
 function reseted($twig, $mdp, $confirm, $nickname, $hashed, $name)
