@@ -31,10 +31,10 @@ try {
    $mail->isSMTP();                                            // Set mailer to use SMTP
    $mail->Host       = 'smtp.free.fr';  // Specify main and backup SMTP servers
    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-   $mail->Username   = 'indian.express@free.fr';                     // SMTP username
-   $mail->Password   = '********';                               // SMTP password
+   $mail->Username   = 'p5oc@free.fr';                     // SMTP username
+   $mail->Password   = 'OpenClassrooms';                               // SMTP password
    $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
-   $mail->Port       = 465;   
+   $mail->Port       = 465; 
 
    //Recipients
    $mail->setFrom($email_address, $name);

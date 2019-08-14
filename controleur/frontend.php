@@ -48,6 +48,50 @@ function registration($twig, $firstname, $lastname, $nickname, $email, $password
     }
 }
 
+function forgot($twig, $email) 
+{
+    if(empty($email) 		||
+            !filter_var($email,FILTER_VALIDATE_EMAIL)) {
+                echo "No arguments Provided!";
+                return false;
+        }
+    $db = new db;
+    $exists = $db->req("SELECT * FROM users WHERE email = '$email'")->fetch();
+    if ($exists == false) {
+        echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'unknown'));
+    } else {
+    sendforgot($email);
+    echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'known'));
+    }
+}
+
+function resetpwd($twig, $hashed) 
+{
+    $db = new db;
+    $name = $db->req("SELECT firstname, nickname FROM users WHERE password = '$hashed'")->fetch();
+    echo $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name[0], 'state' => 'standby', 'nickname' => $name[1]));
+}
+
+function reseted($twig, $mdp, $confirm, $nickname, $hashed, $name)
+{
+    if ($mdp !== $confirm) {
+        echo $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name, 'state' => 'fail', 'nickname' => $nickname));
+    } else {
+        $db = new db;
+        $ok = $db->req("SELECT password FROM users WHERE nickname = '$nickname'")->fetch();
+        if ($ok[0] === $hashed) {
+            $newhashed = password_hash($confirm, PASSWORD_DEFAULT);
+            $replace = $db->req("UPDATE users SET password='$newhashed' WHERE nickname='$nickname'");
+            sendConfirmation($nickname);
+            verification($twig, $nickname, $mdp);
+            } else {
+            echo "Vous avez déjà réinitialisé votre mot de passe, recommencez l'opération si vous l'avez encore oublié";
+            var_dump($ok, $nickname);
+
+        }
+    }
+}
+
 function liste($twig, $page = 1) 
 {
     $postMapper = new PostManager;

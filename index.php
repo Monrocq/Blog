@@ -87,6 +87,24 @@ switch ($action) {
         $confirm = $_POST['confirm'];
         registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm);
         break;
+    case 'forgot':
+        require('mail/forgot.php');
+        $email_address = strip_tags(htmlspecialchars($_POST['email']));
+        forgot($twig, $email_address);
+        break;
+    case 'reset':
+        $hashed = $_GET['hashed'];
+        resetpwd($twig, $hashed);
+        break;
+    case 'reseted':
+        require('mail/forgot.php');
+        $mdp = $_POST['mdp'];
+        $confirm = $_POST['confirm'];
+        $nickname = $_GET['nickname'];
+        $hashed = $_GET['hashed'];
+        $name = $_GET['name'];
+        reseted($twig, $mdp, $confirm, $nickname, $hashed, $name);
+        break;
     default:
         accueil($twig);
 }
