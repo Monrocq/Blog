@@ -67,12 +67,12 @@ switch ($action) {
         updateComment($id, $comment, $content);
         break;
     case 'authentification':
-        authentification($twig);
+        authentification($twig, $id);
         break;
     case 'verification':
         $nickname = $_POST['nickname'];
         $mdp = $_POST['mdp'];
-        verification($twig, $nickname, $mdp);
+        verification($twig, $nickname, $mdp, $id);
         break;
     case 'deconnexion':
         deconnexion();
@@ -88,7 +88,7 @@ switch ($action) {
         $email = $_POST['email'];
         $password = $_POST['mdp'];
         $confirm = $_POST['confirm'];
-        registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm);
+        registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm, $id);
         break;
     case 'forgot':
         require('mail/forgot.php');

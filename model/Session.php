@@ -25,11 +25,13 @@ class Session {
     }
 
     private function connexion($nickname, $mdp) {
-        $connexion = $this->db->req("SELECT password FROM users WHERE nickname = '$nickname'");
+        $connexion = $this->db->req("SELECT id, password, lvl FROM users WHERE nickname = '$nickname'");
         $pwd = $connexion->fetch();
-        if (password_verify($mdp, $pwd[0])) {
+        if (password_verify($mdp, $pwd[1])) {
             $_SESSION['connected'] = true;
             $_SESSION['nickname'] = $this->getNickname();
+            $_SESSION['id'] = $pwd[0];
+            $_SESSION['lvl'] = $pwd[2];
             $connected = true;
         } else {
             $_SESSION['connected'] = false;

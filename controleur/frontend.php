@@ -5,16 +5,20 @@ function accueil($twig, $connected = "not")
     echo $twig->render('homeView.twig', array('titre' => 'Ballinity - Home', 'connected' => $connected));
 }
 
-function authentification($twig)
+function authentification($twig, $id)
 {
-    echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'standby'));
+    echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'standby', 'id' => $id));
 }
 
-function verification($twig, $nickname, $mdp)
+function verification($twig, $nickname, $mdp, $id = 0)
 {
     $pwd = new Session($nickname, $mdp);
     if ($_SESSION['connected'] === true) {
-        header('Location: index.php');
+        if ((int)$id > 0) {
+            header("Location: index.php?action=single&id=$id");
+        } else {
+            header('Location: index.php');
+        }
     } else {
         echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'fail'));
     }
@@ -26,7 +30,7 @@ function deconnexion()
     header('Location: index.php');
 }
 
-function registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm)
+function registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm, $id)
 {
     if ($password === $confirm) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
@@ -36,7 +40,7 @@ function registration($twig, $firstname, $lastname, $nickname, $email, $password
             $nickexists = $db->req("SELECT * FROM users WHERE nickname='$nickname'")->fetch();
             if ($nickexists == false) {
                 $db->req("INSERT INTO users(name, firstname, nickname, email, password, lvl) VALUES ('$lastname', '$firstname', '$nickname', '$email', '$hash', '1')");
-                verification($twig, $nickname, $confirm);
+                verification($twig, $nickname, $confirm, $id);
             } else {
                 echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'failed', 'failed' => 'nick'));
             }
@@ -97,7 +101,6 @@ function reseted($twig, $mdp, $confirm, $nickname, $hashed, $name)
             verification($twig, $nickname, $mdp);
             } else {
             echo "Vous avez déjà réinitialisé votre mot de passe, recommencez l'opération si vous l'avez encore oublié";
-            var_dump($ok, $nickname);
 
         }
     }

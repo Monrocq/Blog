@@ -25,9 +25,16 @@
     <div id="comment-box">
         <h3 id="h3-head"><span id="comment-title">Commentaires</span>
         <!-- Bonton ajout -->
+        {% if session.connected == true %}
         <a class="btn btn-primary btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="btn-add">
         Ajouter un commentaire
-        </a></h3>
+        </a>
+        {% else %}
+        <a class="btn btn-primary btn-success" href="index.php?action=authentification&id={{id}}" role="button" id="btn-add">
+        Ajouter un commentaire
+        </a>
+        {% endif %}
+        </h3>
         <!-- Modal Ajout -->
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
@@ -52,14 +59,18 @@
         <p>{{ comment.getContent }}</p>
         </div>
         <div class="btn-comment">
+            {% if session.nickname == comment.getAuthor %}
             <!-- Bouton modif' -->
             <a class="btn btn-warning" data-toggle="collapse" href="#collapseModif{{comment.getId}}" role="button" aria-expanded="false" aria-controls="collapseModif{{comment.getId}}" id="comment{{comment.getId}}">
             Modifier le commentaire
             </a>
+            {% endif %}
+            {% if session.nickname == comment.getAuthor or session.lvl in [2, 3] or session.nickname == article.getAuthor %}
             <!-- Bonton suppression -->
             <a class="btn btn-danger" href="index.php?action=deletecomment&comment={{comment.getId}}&id={{id}}">
                 Supprimer le commentaire
             </a>
+            {% endif %}
         </div>
         </div>
         <!-- Modal Modif' -->

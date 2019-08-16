@@ -25,7 +25,7 @@
                             Erreur, Mauvais pseudo ou mot de passe!
                         </div>
                     {% endif %}
-                    <form method="post" action="index.php?action=verification" class="container sign-in">
+                    <form method="post" action="index.php?action=verification&id={{id}}" class="container sign-in">
                         <div>
                             <label for="nickname">Nom d'utilisateur : </label>
                             <input required type="text" name="nickname" />
@@ -72,7 +72,7 @@
                         L'adresse mail est déjà utilisé
                     </div>
                     {% endif %}
-                   <form method="post" action="index.php?action=register">
+                   <form method="post" action="index.php?action=register&id={{id}}">
                     <div id="sign-up">
                         <label for="firstname">Prénom :</label>
                         <input required type="text" name="firstname" />

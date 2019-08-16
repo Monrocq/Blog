@@ -20,11 +20,16 @@ class CommentManager {
             FROM comments JOIN users ON comments.author = users.id WHERE comments.post = $post GROUP BY id DESC LIMIT 5 OFFSET $offset");
         $comments = array();
         foreach ($listing as $key => $dataRow) {
+            if ($dataRow['last_maj'] !== null) {
+                $date = $dataRow['last_maj'];
+            } else {
+                $date = $dataRow['date_added'];
+            }
             $commentObject = new Comment(
                 $dataRow['id'],
                 $dataRow['post'],
                 $dataRow['nickname'],
-                $dataRow['date_added'],
+                $date,
                 $dataRow['content']);
             $comments[] = $commentObject;
         }
@@ -46,8 +51,9 @@ class CommentManager {
     }
 
     public function addComment($post, $content) {
+        $id = $_SESSION['id'];
         $reqadd = $this->db->req(
-            "INSERT INTO comments(author, post, content, date_added) VALUES (1, $post, '$content', CURRENT_TIMESTAMP)");
+            "INSERT INTO comments(author, post, content, date_added) VALUES ($id, $post, '$content', CURRENT_TIMESTAMP)");
         return $reqadd;
     }
 
@@ -59,7 +65,7 @@ class CommentManager {
 
     public function updateComment($comment, $content) {
         $requpdate = $this->db->req(
-            "UPDATE comments SET content='$content' WHERE id=$comment");
+            "UPDATE comments SET content='$content', last_maj=CURRENT_TIMESTAMP WHERE id=$comment");
         return $requpdate;
     }
 }
