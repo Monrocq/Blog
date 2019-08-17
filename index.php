@@ -113,3 +113,5 @@ switch ($action) {
         accueil($twig);
 }
 
+//Tous les cookies utilisés sur ce site sont exemptés d'accords de l'utilisateur, il est donc contre-professionnel de charger le site inutilement avec ça
+//https://www.cnil.fr/fr/cookies-comment-mettre-mon-site-web-en-conformite
