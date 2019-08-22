@@ -19,6 +19,7 @@ Autoloader::register();
 
 //Page d'accueil
 require('controleur/frontend.php');
+require('controleur/backend.php');
 
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
@@ -108,6 +109,16 @@ switch ($action) {
         $hashed = $_GET['hashed'];
         $name = $_GET['name'];
         reseted($twig, $mdp, $confirm, $nickname, $hashed, $name);
+        break;
+    case 'bo':
+        bo($twig);
+        break;
+    case 'addarticle':
+        $title=$_POST['title'];
+        $chapo=$_POST['chapo'];
+        $content=$_POST['content'];
+        $id=$_GET['id'];
+        addArticle($twig, $title, $chapo, $content, $id);
         break;
     default:
         accueil($twig);

@@ -231,3 +231,19 @@ textarea {
 #resetpwd input {
     margin: auto 30px;
 }
+
+/* BO */
+
+#bo div {
+    border: 1px solid black;
+}
+
+#bo h3, #bo h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+#article-added {
+    max-width: 70%;
+    margin: auto;
+}
