@@ -258,3 +258,18 @@ textarea {
     scrollbar-color: rebeccapurple green;
     scrollbar-width: thin;
   }
+
+  table
+  {
+      border-collapse: collapse;
+      width: 100%;
+  }
+  td, th /* Mettre une bordure sur les td ET les th */
+  {
+      border: 1px solid black;
+      text-align: center;
+  }
+
+  .td {
+      width: 20%;
+  }
