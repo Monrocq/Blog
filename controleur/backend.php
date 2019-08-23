@@ -39,3 +39,10 @@ function validate($comment)
     $commentMapper->validate($comment);
     header('Location: index.php?action=bo');
 }
+
+function change($role, $user)
+{
+    $userMapper = new UserManager;
+    $userMapper->change($role, $user);
+    header('Location: index.php?action=bo');
+}

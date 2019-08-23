@@ -238,6 +238,14 @@ textarea {
 
 /* BO */
 
+#bo {
+    margin: 20px;
+}
+
+#bo .jumbotron {
+    padding: 10px;
+}
+
 #bo div {
     border: 1px solid black;
 }
@@ -272,4 +280,27 @@ textarea {
 
   .td {
       width: 20%;
+  }
+
+  /* Responsible */
+
+  @media screen and (max-width: 400px) {
+      #h3-head {
+          flex-wrap: wrap;
+      }
+      
+      #h3-head a {
+          margin-top: 10px;
+      }
+
+      #blog-title h1 {
+          font-size: 2em;
+      }
+
+      #state a {
+          display: block;
+          height: 100%;
+          line-height: 100%;
+          text-align: center;
+      }
   }

@@ -21,7 +21,7 @@ class User {
 	}
 
 	public function setId($_id){
-		$this->_name = $_id;
+		$this->_id = $_id;
 	}
 
 

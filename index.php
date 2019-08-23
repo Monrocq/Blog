@@ -68,7 +68,7 @@ switch ($action) {
         if (isset($_GET['commentadded'])) {
             $commentadded = $_GET['commentadded'];
         }
-        single($twig, $id, $page, $commentpage, $commentadded);
+        single($twig, $id, $page, $commentpage, $commentadded = '');
         break;
     case 'addcomment':
         $content = $_POST['content'];
@@ -150,6 +150,11 @@ switch ($action) {
     case 'validate':
         $comment = $_GET['comment'];
         validate($comment);
+        break;
+    case 'change':
+        $role = $_GET['role'];
+        $user = $_GET['user'];
+        change($role, $user);
         break;
     default:
         accueil($twig);

@@ -18,17 +18,17 @@ class UserManager {
     }
 
     public function listVisitors() {
-        $users = $this->db->req("SELECT * FROM users WHERE lvl = 0 ORDER BY nickname")->fetchall();
+        $users = $this->db->req("SELECT * FROM users WHERE lvl = '0' ORDER BY nickname")->fetchall();
         return $this->usersInObject($users);
     }
 
     public function listMembers() {
-        $users = $this->db->req("SELECT * FROM users WHERE lvl = 1 ORDER BY nickname")->fetchall();
+        $users = $this->db->req("SELECT * FROM users WHERE lvl = '1' ORDER BY nickname")->fetchall();
         return $this->usersInObject($users);
     }
 
     public function listModos() {
-        $users = $this->db->req("SELECT * FROM users WHERE lvl = 2 ORDER BY nickname")->fetchall();
+        $users = $this->db->req("SELECT * FROM users WHERE lvl = '2' ORDER BY nickname")->fetchall();
         return $this->usersInObject($users);
     }
 
@@ -54,5 +54,9 @@ class UserManager {
             $group[] = $obj;
         }
         return $group;
+    }
+
+    public function change($role, $user) {
+        $this->db->req("UPDATE users SET lvl = '$role' WHERE id = $user");
     }
 }
