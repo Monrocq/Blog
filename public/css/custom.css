@@ -12,8 +12,28 @@
     /* background-color: white; */
 }
 
+/* Header */
+
 #blog-btn a {
     color: #2C3E50;
+}
+
+#status {
+    font-size: 0.8em;
+    color: #18BC9C;
+}
+
+#status #connected {
+    color: #18BC9C;
+}
+
+#status span {
+    text-decoration: underline;
+    color: red;
+}
+
+#status span:hover {
+    color: pink;
 }
 
 /* accueil */
@@ -89,3 +109,152 @@
     text-decoration: underline;
     font-style: italic;
 }
+
+#input-title {
+    width: 50%;
+}
+
+/* Single articles Comments */
+
+#comment-box {
+    border: solid;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+#h3-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#comment-title {
+    text-decoration: underline;
+    margin-left: 20px;
+    display: inline-block;
+}
+
+#btn-add {
+    text-align: right;
+    display: inline-block;
+}
+
+#comment-box form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+textarea {
+    width: 100%;
+}
+
+#comment-box input {
+    margin-top: 10px !important;
+}
+
+#comments {
+    margin-bottom: 20px;
+}
+
+#comments h5, #comments h6 {
+    display: inline-block;
+    margin: auto 20px;
+    text-decoration: underline;
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-comment a {
+    margin: 2px;
+}
+
+/* Authentification */
+
+.mb-0 button {
+    font-weight: bold;
+}
+
+#authentification .sign-in {
+    margin: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#authentification .sign-in div {
+    margin: auto 20px;
+}
+
+#authentification input {
+    margin: 10px;
+}
+
+#state {
+    display: flex;
+    justify-content: space-between;
+}
+
+#state p {
+    font-size: 1em;
+    margin-left: 50px;
+}
+
+#sign-up {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20%;
+}
+
+#sign-up input {
+    min-width: 30%;
+    margin: auto;
+}
+
+#submit {
+    font-size: 1.5rem;
+    text-align: right;
+}
+
+/* Reset PWD */
+
+#resetpwd {
+    display: flex;
+    margin: 50px;
+    margin-top: 30px;
+}
+
+#resetpwd input {
+    margin: auto 30px;
+}
+
+/* BO */
+
+#bo div {
+    border: 1px solid black;
+}
+
+#bo h3, #bo h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+#article-added {
+    max-width: 70%;
+    margin: auto;
+}
+
+.scroller {
+    max-height: 450px;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+  }

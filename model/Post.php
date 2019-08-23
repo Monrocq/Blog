@@ -8,10 +8,11 @@ class Post {
     private $_content;
     private $_author;
     private $_dateadded;
-    private $_lastupdated;
+	private $_lastupdated;
+	private $_nbcomments;
 
-    public function __construct($id, $title, $chapo, $content, $author, $dateadded, $lastupdated) {
-        $this->hydrate($id, $title, $chapo, $content, $author, $dateadded, $lastupdated);
+    public function __construct($id, $title, $chapo, $content, $author, $dateadded, $lastupdated, $nbcomments=0) {
+        $this->hydrate($id, $title, $chapo, $content, $author, $dateadded, $lastupdated, $nbcomments);
     }
 
     public function getId(){
@@ -68,15 +69,29 @@ class Post {
 
 	public function setLastUpdated($_lastupdated){
 		$this->_lastupdated = $_lastupdated;
-    }
+	}
+	
+	public function getNbComments(){
+		return $this->_nbcomments;
+	}
+
+	public function setNbComments($_nbcomments){
+		$this->_nbcomments = $_nbcomments;
+	}
     
-    protected function hydrate($id, $title, $chapo, $content, $author, $dateadded, $lastupdated) {
+    protected function hydrate($id, $title, $chapo, $content, $author, $dateadded, $lastupdated, $nbcomments = 0) {
         $this->setId($id);
         $this->setTitle($title);
         $this->setChapo($chapo);
         $this->setContent($content);
         $this->setAuthor($author);
         $this->setDateAdded($dateadded);
-        $this->setLastUpdated($lastupdated);
+		$this->setLastUpdated($lastupdated);
+		$this->setNbComments($nbcomments);
+	}
+	
+	public function getComments($commentpage) {
+		$commentMapper = new CommentManager;
+		return $commentMapper->getComments($this->getId(), $commentpage);
     }
 }

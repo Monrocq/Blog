@@ -1,0 +1,26 @@
+{% extends "template.twig" %}
+
+{% block content %}
+
+<div id="blog-title">
+    <h1>Réinitialisation du mot de passe</h1>
+</div>
+<br>
+<p class="text-center">Content de vous revoir {{name}}!</p>
+
+<div class="container">
+    {% if state == 'fail' %}
+        <div class="alert alert-danger" role="alert">
+            Les mots de passes ne correspondent pas
+        </div>
+    {% endif %}
+    <form method="post" action="index.php?action=reseted&nickname={{nickname}}&hashed={{hashed}}&name={{name}}"  id="resetpwd">
+        <label for="mdp">Choisissez un nouveau mot de passe :</label>
+        <input type="password" name="mdp" />
+        <label for="confirm">Confirmez ce mot de passe :</label>
+        <input type="password" name="confirm" />
+        <input type="submit" />
+    </form>
+</div>
+
+{% endblock %}

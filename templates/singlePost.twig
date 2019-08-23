@@ -6,19 +6,154 @@
     <h3><a href="index.php?action=articles&page={{page}}">Retour aux articles</a></h3>
 </div>
 
-<div class="container" id="single">
-    <div id="maj"><em> Article mis à jour le :
-        {% if article.getLastUpdated() == null %}
-            {{ article.getDateAdded() }}
+<div class="container">
+    <div id="single">
+        <div id="maj"><em> Article mis à jour le :
+            {% if article.getLastUpdated() == null %}
+                {{ article.getDateAdded() }}
+            {% else %}
+                {{ article.getLastUpdated() }}
+            {% endif %}
+        </em></div>
+        <h2> {{ article.getTitle }} </h2>
+        <h3> {{ article.getChapo }} <h3>
+        <hr>
+        <p> {{ article.getContent }} </p><br>
+        <div id="author"> Auteur : {{ article.getAuthor }} </div>
+    </div>
+    {% if (session.lvl > 2) or (session.nickname == article.getAuthor) %}
+    <p class="text-right">
+        <!-- Bouton modif' -->
+        <a class="btn btn-warning" data-toggle="collapse" href="#collapseUpdate{{article.getId}}" role="button" aria-expanded="false" aria-controls="collapseUpdate{{article.getId}}" id="article{{article.getId}}">
+        Modifier le commentaire
+        </a>
+        <!-- Bonton suppression -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suppressionArticle">
+        Supprimer l'article
+        </button>
+    </p>
+    <!-- Modal Suppression -->
+    <div class="modal fade" id="suppressionArticle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Avertissement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                La suppression de l'<strong>Article</strong> est <u>irréverssible!</u>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <a class="btn btn-primary btn-secondary" href="index.php?action=deletearticle&article={{article.getId}}" role="button">
+                Confirmer la suppression
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dropdown modif' -->
+    <div class="collapse" id="collapseUpdate{{article.getId}}">
+        <div class="card card-body">
+            <form method="post" action="index.php?action=updatearticle&id={{article.getId}}">
+                <label for="title">Titre :</label><br>
+                <input type="text" name="title" id="input-title" value="{{article.getTitle}}"/><br>
+                <label for="chapo">Chapo :</label>
+                <textarea name="chapo">{{article.getChapo}}</textarea>
+                <label for="content">Contenu :</label>
+                <textarea name="content" rows="10" cols="100">{{article.getContent}}</textarea><br><br>
+            <p class="text-right"><input type="submit" value="Envoyer" /></p>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    <br>
+    <div id="comment-box">
+        <h3 id="h3-head"><span id="comment-title">Commentaires</span>
+        <!-- Bonton ajout -->
+        {% if session.connected == true %}
+        <a class="btn btn-primary btn-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="btn-add">
+        Ajouter un commentaire
+        </a>
         {% else %}
-            {{ article.getLastUpdated() }}
+        <a class="btn btn-primary btn-success" href="index.php?action=authentification&id={{id}}" role="button" id="btn-add">
+        Ajouter un commentaire
+        </a>
         {% endif %}
-    </em></div>
-    <h2> {{ article.getTitle }} </h2>
-    <h3> {{ article.getChapo }} <h3>
-    <hr>
-    <p> {{ article.getContent }} </p><br>
-    <div id="author"> Auteur : {{ article.getAuthor }} </div>
+        </h3>
+        <!-- Modal Ajout -->
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <label for="comment">Votre commentaire : </label>
+                    <form method="post" action="index.php?action=addcomment&id={{id}}">
+                    <br>
+                        <textarea name="content" id="comment"></textarea>
+                        <input type="submit" value="Envoyer" />
+                    </form>
+            </div>
+        </div>
+        <div id="comments">
+        {% if commentadded == 'yes' %}
+        <br>
+        <div class="alert alert-success" role="alert">
+            Votre commentaire a bien été envoyé! Il sera examiné prochainement afin d'être publié.
+        </div><br>
+        {% endif %}
+        {% if comments == false %}
+        Aucun commentaires pour le moment <br><strong>Soyez le premier à commenter! </strong>
+        {% endif %}
+        {% for comment in comments %}
+        <hr>
+        <div class="comment">
+        <div>
+        <h5>Auteur : {{ comment.getAuthor }}</h5>
+        <h6>Le : {{ comment.getDate }}</h6>
+        <p>{{ comment.getContent }}</p>
+        </div>
+        <div class="btn-comment">
+            {% if session.nickname == comment.getAuthor %}
+            <!-- Bouton modif' -->
+            <a class="btn btn-warning" data-toggle="collapse" href="#collapseModif{{comment.getId}}" role="button" aria-expanded="false" aria-controls="collapseModif{{comment.getId}}" id="comment{{comment.getId}}">
+            Modifier le commentaire
+            </a>
+            {% endif %}
+            {% if session.nickname == comment.getAuthor or session.lvl in [2, 3] or session.nickname == article.getAuthor %}
+            <!-- Bonton suppression -->
+            <a class="btn btn-danger" href="index.php?action=deletecomment&comment={{comment.getId}}&id={{id}}">
+                Supprimer le commentaire
+            </a>
+            {% endif %}
+        </div>
+        </div>
+        <!-- Modal Modif' -->
+            <div class="collapse" id="collapseModif{{comment.getId}}">
+                <div class="card card-body">
+                    <label for="comment">Votre commentaire : </label>
+                        <form method="post" action="index.php?action=updatecomment&id={{id}}&comment={{comment.getId}}">
+                        <br>
+                            <textarea name="content" id="comment">{{comment.getContent}}</textarea>
+                            <input type="submit" value="Envoyer" />
+                        </form>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <div id="numerotation-pages">
+            Pages :
+            {% for page in pages %}
+                <a href="index.php?action=single&commentpage={{page}}&id={{article.getId}}" class="num-page">
+                    {% if page == commentpage %}
+                        <strong>{{page}}</strong>
+                    {% else %}
+                        <em>{{page}}</em>
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
 
 {% endblock %}

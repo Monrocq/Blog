@@ -1,0 +1,152 @@
+{% extends "template.twig" %}
+
+{% block content %}
+
+<div id="blog-title">
+    <h1>Authentification</h1>
+</div>
+
+<div class="container" id="authentification">
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                SE CONNECTER
+                </button>
+            </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse {% if (auth != 'known') and (auth != 'unknown') %}show{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    {% if session.connected == false %}
+                    {% if auth == "fail" %}
+                        <div class="alert alert-danger" role="alert">
+                            Erreur, Mauvais pseudo ou mot de passe!
+                        </div>
+                    {% endif %}
+                    <form method="post" action="index.php?action=verification&id={{id}}" class="container sign-in">
+                        <div>
+                            <label for="nickname">Nom d'utilisateur : </label>
+                            <input required type="text" name="nickname" />
+                        </div>
+                        <div>
+                            <label for="mdp">Mot de passe : </label>
+                            <input required type="password" name="mdp" />
+                        </div>
+                        <input required type="submit" />
+                    </form>
+                    {% else %}
+                    <div id="state">
+                        <p><strong>{{session.nickname}}</strong>, vous êtes bien connecté! Souhaitez vous vous deconnecter?</p>
+                        <a class="btn btn-danger" href="index.php?action=deconnexion">
+                            Deconnexion
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if session.connected == false %}
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                S'INSCRIRE
+                </button>
+            </h2>
+            </div>
+            {% if auth == 'failed' %}
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample"> 
+                <div class="card-body">
+                    {% if failed == 'mdp' %}
+                    <div class="alert alert-danger" role="alert">
+                        Les mots de passes ne correspondent pas
+                    </div>
+                    {% elseif failed == 'nick' %}
+                    <div class="alert alert-danger" role="alert">
+                        Le nom d'utilisateur est déjà utilisé
+                    </div>
+                    {% elseif failed == 'email' %}
+                    <div class="alert alert-danger" role="alert">
+                        L'adresse mail est déjà utilisé
+                    </div>
+                    {% endif %}
+                   <form method="post" action="index.php?action=register&id={{id}}">
+                    <div id="sign-up">
+                        <label for="firstname">Prénom :</label>
+                        <input required type="text" name="firstname" />
+                        <label for="surname">Nom de famille :</label>
+                        <input required type="text" name="surname" />
+                        <label for="nickname">Pseudo :</label>
+                        <input required type="text" name="nickname" />
+                        <label for="email">Adresse mail :</label>
+                        <input required type="email" name="email" />
+                        <label for="mdp">Définissez un mot de passe :</label>
+                        <input required type="password" name="mdp" />
+                        <label for="confirm">Confirmez le mot de passe :</label>
+                        <input required type="password" name="confirm" />
+                    </div>
+                    <p id="submit"><input required type="submit"/></p>
+                   </form>
+                </div>
+            </div>
+            {% else %}
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                   <form method="post" action="index.php?action=register">
+                    <div id="sign-up">
+                        <label for="firstname">Prénom :</label>
+                        <input required type="text" name="firstname" />
+                        <label for="surname">Nom de famille :</label>
+                        <input required required type="text" name="surname" />
+                        <label for="nickname">Pseudo :</label>
+                        <input required type="text" name="nickname" />
+                        <label for="email">Adresse mail :</label>
+                        <input required type="email" name="email" />
+                        <label for="mdp">Définissez un mot de passe :</label>
+                        <input required type="password" name="mdp" />
+                        <label for="confirm">Confirmez le mot de passe :</label>
+                        <input required type="password" name="confirm" />
+                    </div>
+                    <p id="submit"><input required type="submit"/></p>
+                   </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Identifiants de connexion oubliés
+                </button>
+            </h5>
+            </div>
+            <div id="collapseThree" class="collapse {% if auth in ['unknown', 'known'] %}show{% endif %}" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    {% if auth == 'unknown' %}
+                    <div class="alert alert-danger" role="alert">
+                        Aucun compte associé
+                    </div>
+                    {% elseif auth == 'known' %}
+                    <div class="alert alert-success" role="alert">
+                        Mail contenant le lien de réinitialisation correctement envoyé!
+                    </div>
+                    {% endif %}
+                    <form method="post" action="index.php?action=forgot" class="sign-in">
+                        <div>
+                            <label for="email">Rentrez votre adresse mail :</label>
+                            <input required type="email" name="email"/>
+                        </div>
+                        <input required type="submit" />
+                    </form> 
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <br>
+    </div>
+</div>
+
+{% endblock %}

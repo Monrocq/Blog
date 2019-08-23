@@ -5,7 +5,7 @@ class db {
     private $db;
 
     public function __construct() {
-        $this->db = new PDO('mysql:host=localhost;dbname=p5', 'root', '');
+        $this->db = new PDO('mysql:host=localhost;dbname=p5;charset=utf8', 'root', '');
     }
 
     public function req($req) {
