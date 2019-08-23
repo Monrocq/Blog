@@ -17,9 +17,16 @@ function addArticle($twig, $title, $chapo, $content, $id)
     echo $twig->render('bo.twig', array('id' => $id, 'post' => $newpost));
 }
 
-function deletearticle($twig, $article)
+function deleteArticle($twig, $article)
 {
     $postMapper = new PostManager;
     $postMapper->deleteArticle($article);
     header('Location: index.php?action=articles');
+}
+
+function updateArticle($twig, $title, $chapo, $content, $id) 
+{
+    $postMapper = new PostManager;
+    $postMapper->updateArticle($title, $chapo, $content, $id);
+    header("Location: index.php?action=single&id=$id");
 }

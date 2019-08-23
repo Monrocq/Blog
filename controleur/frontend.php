@@ -129,7 +129,7 @@ function pagination($nb) {
     return $pages;
 }
 
-function single($twig, $id, $page = 1, $commentpage)
+function single($twig, $id, $page = 1, $commentpage = 1)
 {
     setcookie('page', $page); //Pour éviter de se trimbaler $page à chaque fois qu'on CRUD un commentaire
     setcookie('commentpage', $commentpage);

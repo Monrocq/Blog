@@ -137,6 +137,13 @@ switch ($action) {
         $article = $_GET['article'];
         deleteArticle($twig, $article);
         break;
+    case 'updatearticle':
+        $title=$_POST['title'];
+        $chapo=$_POST['chapo'];
+        $content=$_POST['content'];
+        $id=$_GET['id'];
+        updateArticle($twig, $title, $chapo, $content, $id);
+        break;
     default:
         accueil($twig);
 }

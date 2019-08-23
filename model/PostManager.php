@@ -62,4 +62,10 @@ class PostManager {
             "DELETE FROM posts WHERE id=$article");
     }
 
+    public function updateArticle($title, $chapo, $content, $id) {
+        $this->db->req(
+            "UPDATE posts SET title='$title', chapo='$chapo', content='$content', last_updated=CURRENT_TIMESTAMP WHERE id=$id"
+        );
+    }
+
 }

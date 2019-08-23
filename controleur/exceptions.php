@@ -14,3 +14,13 @@ function addArticle($twig, $title, $chapo, $content, $id)
 {
     return erreur();
 }
+
+function deleteArticle($twig, $article)
+{
+    return erreur();
+}
+
+function updateArticle($twig, $title, $chapo, $content, $id) 
+{
+    return erreur();
+}
