@@ -108,11 +108,13 @@
         <div class="footer-above">
             <div class="container">
                 <div class="row">
+                    {% if session.lvl > 2 %}
                     <div class="footer-col col-md-12">
                         <a class="btn btn-info" href="index.php?action=bo" role="button">
                             Espace d'Administration
                         </a>
                     </div>
+                    {% endif %}
                     <div class="footer-col col-md-4">
                         <h3>Mon adresse postale</h3>
                         <p>Saint-Malo, 35400

@@ -16,3 +16,10 @@ function addArticle($twig, $title, $chapo, $content, $id)
     $newpost = $postMapper->addArticle($title, $chapo, $content, $id);
     echo $twig->render('bo.twig', array('id' => $id, 'post' => $newpost));
 }
+
+function deletearticle($twig, $article)
+{
+    $postMapper = new PostManager;
+    $postMapper->deleteArticle($article);
+    header('Location: index.php?action=articles');
+}

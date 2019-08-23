@@ -57,4 +57,9 @@ class PostManager {
         return $last[0];
     }
 
+    public function deleteArticle($article) {
+        $this->db->req(
+            "DELETE FROM posts WHERE id=$article");
+    }
+
 }

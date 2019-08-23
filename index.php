@@ -19,7 +19,19 @@ Autoloader::register();
 
 //Page d'accueil
 require('controleur/frontend.php');
-require('controleur/backend.php');
+
+if (isset($_SESSION['connected'])) {
+    $lvl = $_SESSION['lvl'];
+} else {
+    $lvl = 1;
+}
+
+if ($lvl > 1) {
+    require('controleur/backend.php');
+} else {
+    require('controleur/exceptions.php');
+}
+
 
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
@@ -47,6 +59,7 @@ if (isset($_GET['action'])) {
     $action = 'accueil';
 }
 
+try {
 switch ($action) {
     case 'articles':
         liste($twig, $page);
@@ -120,8 +133,18 @@ switch ($action) {
         $id=$_GET['id'];
         addArticle($twig, $title, $chapo, $content, $id);
         break;
+    case 'deletearticle':
+        $article = $_GET['article'];
+        deleteArticle($twig, $article);
+        break;
     default:
         accueil($twig);
+}
+}
+
+catch (Exception $e) // Nous allons attraper les exceptions "Exception" s'il y en a une qui est levée.
+{
+  echo 'Une exception a été lancée. Message d\'erreur : ', $e->getMessage();
 }
 
 //Tous les cookies utilisés sur ce site sont exemptés d'accords de l'utilisateur, il est donc contre-professionnel de charger le site inutilement avec ça
