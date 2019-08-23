@@ -129,7 +129,7 @@ function pagination($nb) {
     return $pages;
 }
 
-function single($twig, $id, $page = 1, $commentpage = 1)
+function single($twig, $id, $page = 1, $commentpage = 1, $commentadded = '')
 {
     setcookie('page', $page); //Pour éviter de se trimbaler $page à chaque fois qu'on CRUD un commentaire
     setcookie('commentpage', $commentpage);
@@ -138,7 +138,16 @@ function single($twig, $id, $page = 1, $commentpage = 1)
     $comments = $article->getComments($commentpage);
     $nbcomments = $article->getNbComments();
     $pages = pagination($nbcomments[0]);
-    echo $twig->render('singlePost.twig', array('titre' => 'Ballinity - '.$article->getTitle(), 'article' => $article, 'page' => $page, 'comments' => $comments, 'id' => $id, 'pages' => $pages, 'commentpage' => $commentpage));
+    echo $twig->render('singlePost.twig', array(
+        'titre' => 'Ballinity - '.$article->getTitle(), 
+        'article' => $article, 
+        'page' => $page, 
+        'comments' => $comments, 
+        'id' => $id, 
+        'pages' => $pages, 
+        'commentpage' => $commentpage,
+        'commentadded' => $commentadded
+    ));
 }
 
 function addComment($id, $content) 
@@ -156,22 +165,30 @@ function addComment($id, $content)
 function urlcomment($id, $comment, $type) {
     $commentMapper = new CommentManager;
     if ($type !== 'add') {
-        $comment++; //Vu que la navbar est en fixe, il faut décaller
+        $commentadded = 'no';
+        $comment--; //Vu que la navbar est en fixe, il faut décaller
         while ($commentMapper->commentExists($comment, $id)->fetch() == false) //Afin de s'assurer de tomber sur un bon ID
         {
-            $comment++; 
+            $comment--; 
         }
+    } else {
+        $commentadded = 'yes';
     }
-    return "Location: index.php?action=single&id=$id#comment$comment";
+    return "Location: index.php?action=single&id=$id&commentadded=$commentadded#comment$comment";
 }
 
-function deleteComment($id, $comment)
+function deleteComment($id = 0, $comment)
 {
     $commentMapper = new CommentManager;
     $type = 'delete';
     $delete = $commentMapper->deleteComment($comment);
-    $urlcomment = urlcomment($id, $comment, $type);
-    header($urlcomment);
+    if ($id != 0) {
+        $urlcomment = urlcomment($id, $comment, $type);
+        header($urlcomment);
+    } else {
+        header('Location: index.php?action=bo');
+    }
+    
     //var_dump($delete);
 }
 

@@ -251,3 +251,10 @@ textarea {
     max-width: 70%;
     margin: auto;
 }
+
+.scroller {
+    max-height: 450px;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+  }

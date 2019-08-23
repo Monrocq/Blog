@@ -95,6 +95,12 @@
             </div>
         </div>
         <div id="comments">
+        {% if commentadded == 'yes' %}
+        <br>
+        <div class="alert alert-success" role="alert">
+            Votre commentaire a bien été envoyé! Il sera examiné prochainement afin d'être publié.
+        </div><br>
+        {% endif %}
         {% if comments == false %}
         Aucun commentaires pour le moment <br><strong>Soyez le premier à commenter! </strong>
         {% endif %}

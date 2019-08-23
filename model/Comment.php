@@ -58,5 +58,6 @@ class Comment {
         $this->setAuthor($author);
         $this->setDate($date);
         $this->setContent($content);
-    }
+	}
+	
 }

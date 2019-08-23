@@ -24,6 +24,27 @@
     </div>
     <div class="col-lg-4">
         <h3>Approbation commentaires</h3>
+        {% if comments == false %}
+                <strong>Tous les commentaires ont été inspectés</strong>
+            {% endif %}
+        <div id="comments" class="scroller">
+            {% for comment in comments %}
+            <div class="comment">
+                <h4>Article : {{comment.getArticle}}</h4>
+                <h5>Pseudo : {{comment.getAuthor}}</h5>
+                <h6>Date : {{comment.getDate}}</h6>
+            </div>
+            <p>{{comment.getContent}}</p>
+            <div class="btn-comment">
+                <a class="btn btn-success font-weight-bold text-uppercase" href="index.php?action=validate&comment={{comment.getId}}">
+                Approuver le commentaire
+                </a>
+                <p class="text-center"><a class="btn btn-danger" href="index.php?action=deletecomment&comment={{comment.getId}}&id=0">
+                Supprimer le commentaire
+                </a></p>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     <div class="col-lg-4">
         <h3>Gestion des utilisateurs</h3>

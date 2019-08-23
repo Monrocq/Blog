@@ -65,7 +65,10 @@ switch ($action) {
         liste($twig, $page);
         break;
     case 'single':
-        single($twig, $id, $page, $commentpage);
+        if (isset($_GET['commentadded'])) {
+            $commentadded = $_GET['commentadded'];
+        }
+        single($twig, $id, $page, $commentpage, $commentadded);
         break;
     case 'addcomment':
         $content = $_POST['content'];
@@ -143,6 +146,10 @@ switch ($action) {
         $content=$_POST['content'];
         $id=$_GET['id'];
         updateArticle($twig, $title, $chapo, $content, $id);
+        break;
+    case 'validate':
+        $comment = $_GET['comment'];
+        validate($comment);
         break;
     default:
         accueil($twig);

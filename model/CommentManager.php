@@ -17,7 +17,7 @@ class CommentManager {
         $offset = $commentpage * 5 - 5;
         $listing = $this->db->req(
             "SELECT comments.id, comments.author, comments.post, comments.content, comments.date_added, comments.last_maj, users.nickname 
-            FROM comments JOIN users ON comments.author = users.id WHERE comments.post = $post GROUP BY id DESC LIMIT 5 OFFSET $offset");
+            FROM comments JOIN users ON comments.author = users.id WHERE comments.post = $post AND validation = 1 GROUP BY id DESC LIMIT 5 OFFSET $offset");
         $comments = array();
         foreach ($listing as $key => $dataRow) {
             if ($dataRow['last_maj'] !== null) {
@@ -28,6 +28,28 @@ class CommentManager {
             $commentObject = new Comment(
                 $dataRow['id'],
                 $dataRow['post'],
+                $dataRow['nickname'],
+                $date,
+                $dataRow['content']);
+            $comments[] = $commentObject;
+        }
+        return $comments;
+    }
+
+    public function getNoValidated() {
+        $listing = $this->db->req(
+            "SELECT comments.id, posts.title, comments.content, comments.date_added, comments.last_maj, users.nickname 
+            FROM comments JOIN users ON comments.author = users.id JOIN posts ON comments.post = posts.id WHERE validation = 0");
+        $comments = array();
+        foreach ($listing as $key => $dataRow) {
+            if ($dataRow['last_maj'] !== null) {
+                $date = $dataRow['last_maj'];
+            } else {
+                $date = $dataRow['date_added'];
+            }
+            $commentObject = new Comment(
+                $dataRow['id'],
+                $dataRow['title'],
                 $dataRow['nickname'],
                 $date,
                 $dataRow['content']);
@@ -68,4 +90,8 @@ class CommentManager {
             "UPDATE comments SET content='$content', last_maj=CURRENT_TIMESTAMP WHERE id=$comment");
         return $requpdate;
     }
+
+    public function validate($comment) {
+		$this->db->req("UPDATE comments SET validation = 1 WHERE id=$comment");
+	}
 }

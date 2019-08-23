@@ -2,12 +2,10 @@
 
 function bo($twig)
 {
-    if ((isset($_SESSION['id'])) && ($_SESSION['lvl'] > 1)) {
-        $id = $_SESSION['id'];
-        echo $twig->render('bo.twig', array('id' => $id));
-    } else {
-        echo "ERREUR : Vous essayer de pénétrer une zone interdite, vous risquerez d'avoir quelques ennuies si vous continuez ainsi!";
-    }
+    $commentMapper = new CommentManager;
+    $comments = $commentMapper->getNoValidated();
+    $id = $_SESSION['id']; //For add article
+    echo $twig->render('bo.twig', array('id' => $id, 'comments' => $comments));
 }
 
 function addArticle($twig, $title, $chapo, $content, $id)
@@ -29,4 +27,11 @@ function updateArticle($twig, $title, $chapo, $content, $id)
     $postMapper = new PostManager;
     $postMapper->updateArticle($title, $chapo, $content, $id);
     header("Location: index.php?action=single&id=$id");
+}
+
+function validate($comment)
+{
+    $commentMapper = new CommentManager;
+    $commentMapper->validate($comment);
+    header('Location: index.php?action=bo');
 }
