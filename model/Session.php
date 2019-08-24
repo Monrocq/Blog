@@ -25,6 +25,7 @@ class Session {
     }
 
     private function connexion($nickname, $mdp) {
+        sleep(1);
         $connexion = $this->db->req("SELECT id, password, lvl FROM users WHERE nickname = '$nickname'");
         $pwd = $connexion->fetch();
         if (password_verify($mdp, $pwd[1])) {

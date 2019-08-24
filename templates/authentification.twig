@@ -83,7 +83,7 @@
                         <label for="email">Adresse mail :</label>
                         <input required type="email" name="email" />
                         <label for="mdp">Définissez un mot de passe :</label>
-                        <input required type="password" name="mdp" />
+                        <input required type="password" name="mdp" pattern=".{6,}" title="6 caractères minimum"/>
                         <label for="confirm">Confirmez le mot de passe :</label>
                         <input required type="password" name="confirm" />
                     </div>
