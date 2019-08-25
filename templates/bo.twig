@@ -48,6 +48,50 @@
     </div>
     <div class="col-lg-4">
         <h3>Gestion des utilisateurs</h3>
+        {% if session.lvl > 2 %}
+        <div class="jumbotron scroller">
+            {% for group, user in groups %}
+               <h4 class="text-center">{{group}}</h4><br>
+               <table>
+
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th class="td">Changer le rôle</th>
+                        </tr>
+                {% for user in user %}
+                    {% if user.getId != session.id %} <!-- Afin d'éviter toutes erreurs de manip' supprimant tout admin -->
+                        <tr>
+                            <td>{{user.getNickname}}</td>
+                            <td>{{user.getName}}</td>
+                            <td>{{user.getFirstname}}</td>
+                            <td>{{user.getEmail}}</td>
+                            <td class="td">
+                            <div class="dropdown">
+                                <a class="btn btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Nouveau rôle
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="index.php?action=change&role=0&user={{user.getId}}">Bloqué/Bani/Puni</a><br>
+                                    <a class="dropdown-item" href="index.php?action=change&role=1&user={{user.getId}}">Membre standard</a><br>
+                                    <a class="dropdown-item" href="index.php?action=change&role=2&user={{user.getId}}">Modérateur</a>
+                                    <a class="dropdown-item" href="index.php?action=change&role=3&user={{user.getId}}">Administrateur</a>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </table>
+                <hr>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center">Vous n'avez pas encore les droits</p>
+        {% endif %}
     </div>
 </div>
 <br>
