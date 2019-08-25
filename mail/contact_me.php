@@ -31,8 +31,8 @@ try {
    $mail->isSMTP();                                            // Set mailer to use SMTP
    $mail->Host       = 'smtp.free.fr';  // Specify main and backup SMTP servers
    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-   $mail->Username   = 'p5oc@free.fr';                     // SMTP username
-   $mail->Password   = 'OpenClassrooms';                               // SMTP password
+   $mail->Username   = 'adresse@email.oc';                     // SMTP username
+   $mail->Password   = 'mypassword';                               // SMTP password
    $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
    $mail->Port       = 465; 
 
