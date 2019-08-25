@@ -25,6 +25,10 @@ Afin d'installer le projet sur votre machine, vous pouvez procéder ainsi :
 * Change the line of files at $mail->Username & $mail->Password with your own SMTP config on \mail/ folder
 * Import jeux_de_donnees.sql on your database and, if it's necessary, config the PDO statement at model/db.php
 
+## Code Quality
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Monrocq/Blog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Monrocq/Blog/?branch=master)
+
 ## Bugs and Issues
 
 Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-freelancer/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/freelancer/).
