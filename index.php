@@ -34,24 +34,24 @@ if ($lvl > 1) {
 
 
 if (isset($_GET['action'])) {
-    $action = $_GET['action'];
+    $action = htmlspecialchars($_GET['action']);
     if (isset($_GET['page'])) {
-        $page = $_GET['page'];
+        $page = htmlspecialchars($_GET['page']);
     } elseif (isset($_COOKIE['page'])) {
-        $page = $_COOKIE['page'];
+        $page = htmlspecialchars($_COOKIE['page']);
     } else {
         $page = 1;
     }
     if (isset($_GET['commentpage'])) {
-        $commentpage = $_GET['commentpage'];
+        $commentpage = htmlspecialchars($_GET['commentpage']);
     } elseif (isset($_COOKIE['commentpage'])) {
-        $commentpage = $_COOKIE['commentpage'];
+        $commentpage = htmlspecialchars($_COOKIE['commentpage']);
     } else {
         $commentpage = 1;
     }
     //$id = l'id du Post
     if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+        $id = htmlspecialchars($_GET['id']);
     } else {
         $id = '0';
     }
@@ -66,29 +66,29 @@ switch ($action) {
         break;
     case 'single':
         if (isset($_GET['commentadded'])) {
-            $commentadded = $_GET['commentadded'];
+            $commentadded = htmlspecialchars($_GET['commentadded']);
         }
         single($twig, $id, $page, $commentpage, $commentadded = '');
         break;
     case 'addcomment':
-        $content = $_POST['content'];
+        $content = htmlspecialchars($_POST['content']);
         addComment($id, $content);
         break;
     case 'deletecomment':
-        $comment = $_GET['comment'];
+        $comment = htmlspecialchars($_GET['comment']);
         deleteComment($id, $comment);
         break;
     case 'updatecomment':
-        $comment = $_GET['comment'];
-        $content = $_POST['content'];
+        $comment = htmlspecialchars($_GET['comment']);
+        $content = htmlspecialchars($_POST['content']);
         updateComment($id, $comment, $content);
         break;
     case 'authentification':
         authentification($twig, $id);
         break;
     case 'verification':
-        $nickname = $_POST['nickname'];
-        $mdp = $_POST['mdp'];
+        $nickname = htmlspecialchars($_POST['nickname']);
+        $mdp = htmlspecialchars($_POST['mdp']);
         verification($twig, $nickname, $mdp, $id);
         break;
     case 'deconnexion':
@@ -99,12 +99,12 @@ switch ($action) {
         accueil($twig, $connected);
         break;
     case 'register':
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['surname'];
-        $nickname = $_POST['nickname'];
-        $email = $_POST['email'];
-        $password = $_POST['mdp'];
-        $confirm = $_POST['confirm'];
+        $firstname = htmlspecialchars($_POST['firstname']);
+        $lastname = htmlspecialchars($_POST['surname']);
+        $nickname = htmlspecialchars($_POST['nickname']);
+        $email = htmlspecialchars($_POST['email']);
+        $password = htmlspecialchars($_POST['mdp']);
+        $confirm = htmlspecialchars($_POST['confirm']);
         registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm, $id);
         break;
     case 'forgot':
@@ -113,47 +113,47 @@ switch ($action) {
         forgot($twig, $email_address);
         break;
     case 'reset':
-        $key = $_GET['key'];
-        $hashed = $_GET['hashed'];
+        $key = htmlspecialchars($_GET['key']);
+        $hashed = htmlspecialchars($_GET['hashed']);
         resetpwd($twig, $hashed, $key);
         break;
     case 'reseted':
         require('mail/forgot.php');
-        $mdp = $_POST['mdp'];
-        $confirm = $_POST['confirm'];
-        $nickname = $_GET['nickname'];
-        $hashed = $_GET['hashed'];
-        $name = $_GET['name'];
+        $mdp = htmlspecialchars($_POST['mdp']);
+        $confirm = htmlspecialchars($_POST['confirm']);
+        $nickname = htmlspecialchars($_GET['nickname']);
+        $hashed = htmlspecialchars($_GET['hashed']);
+        $name = htmlspecialchars($_GET['name']);
         reseted($twig, $mdp, $confirm, $nickname, $hashed, $name);
         break;
     case 'bo':
         bo($twig);
         break;
     case 'addarticle':
-        $title=$_POST['title'];
-        $chapo=$_POST['chapo'];
-        $content=$_POST['content'];
-        $id=$_GET['id'];
+        $title = htmlspecialchars($_POST['title']);
+        $chapo = htmlspecialchars($_POST['chapo']);
+        $content = htmlspecialchars($_POST['content']);
+        $id = htmlspecialchars($_GET['id']);
         addArticle($twig, $title, $chapo, $content, $id);
         break;
     case 'deletearticle':
-        $article = $_GET['article'];
+        $article = htmlspecialchars($_GET['article']);
         deleteArticle($twig, $article);
         break;
     case 'updatearticle':
-        $title=$_POST['title'];
-        $chapo=$_POST['chapo'];
-        $content=$_POST['content'];
-        $id=$_GET['id'];
+        $title = htmlspecialchars($_POST['title']);
+        $chapo = htmlspecialchars($_POST['chapo']);
+        $content = htmlspecialchars($_POST['content']);
+        $id = htmlspecialchars($_GET['id']);
         updateArticle($twig, $title, $chapo, $content, $id);
         break;
     case 'validate':
-        $comment = $_GET['comment'];
+        $comment = htmlspecialchars($_GET['comment']);
         validate($comment);
         break;
     case 'change':
-        $role = $_GET['role'];
-        $user = $_GET['user'];
+        $role = htmlspecialchars($_GET['role']);
+        $user = htmlspecialchars($_GET['user']);
         change($role, $user);
         break;
     case '404':
