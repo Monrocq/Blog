@@ -7,7 +7,11 @@
     <h2>Back-Office</h2><br>
     <div class="col-lg-4">
         <h3>Ajout de Post</h3><br>
-        {% if post != null %}
+        {% if post is same as (false) %}
+        <div class="alert alert-danger text-center" role="alert" id="article-added">
+            Il existe déjà un article similaire.
+        </div><br>
+        {% elseif post != null %}
         <div class="alert alert-success text-center" role="alert" id="article-added">
             Post ajouté (<a href="index.php?action=single&id={{post.getId()}}">Voir l'article</a>)
         </div><br>
@@ -18,7 +22,7 @@
             <label for="chapo">Chapo :</label>
             <textarea name="chapo"></textarea>
             <label for="content">Contenu :</label>
-            <textarea name="content" rows="10" cols="100"></textarea><br><br>
+            <textarea name="content" rows="10" cols="100" class="myTextEditor"></textarea><br><br>
             <p id="submit"><input type="submit" /></p><br>
         </form>
     </div>

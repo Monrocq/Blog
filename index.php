@@ -156,8 +156,11 @@ switch ($action) {
         $user = $_GET['user'];
         change($role, $user);
         break;
-    default:
+    case '404':
         error404($twig);
+        break;
+    default:
+        accueil($twig);
 }
 }
 

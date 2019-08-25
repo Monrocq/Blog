@@ -53,8 +53,12 @@ class PostManager {
     public function addArticle($title, $chapo, $content, $id) {
         $add = $this->db->req(
             "INSERT INTO posts(title, chapo, content, author, date_added) VALUES ('$title', '$chapo', '$content', $id, CURRENT_TIMESTAMP)");
+        if ($add == false) {
+            return false;
+        } else {
         $last = $this->getList(1);
         return $last[0];
+        }
     }
 
     public function deleteArticle($article) {

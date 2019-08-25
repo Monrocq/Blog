@@ -18,7 +18,7 @@
         <h2> {{ article.getTitle }} </h2>
         <h3> {{ article.getChapo }} <h3>
         <hr>
-        <p> {{ article.getContent }} </p><br>
+        <p> {{ article.getContent|raw }} </p><br>
         <div id="author"> Auteur : {{ article.getAuthor }} </div>
     </div>
     {% if (session.lvl > 2) or (session.nickname == article.getAuthor) %}
@@ -63,7 +63,9 @@
                 <label for="chapo">Chapo :</label>
                 <textarea name="chapo">{{article.getChapo}}</textarea>
                 <label for="content">Contenu :</label>
-                <textarea name="content" rows="10" cols="100">{{article.getContent}}</textarea><br><br>
+              
+                <textarea name="content" rows="10" cols="100" class="myTextEditor">{{article.getContent}}</textarea><br><br>
+              
             <p class="text-right"><input type="submit" value="Envoyer" /></p>
             </form>
         </div>
@@ -133,7 +135,7 @@
                     <label for="comment">Votre commentaire : </label>
                         <form method="post" action="index.php?action=updatecomment&id={{id}}&comment={{comment.getId}}">
                         <br>
-                            <textarea name="content" id="comment">{{comment.getContent}}</textarea>
+                            <textarea name="content" id="comment">{{comment.getContent|e}}</textarea>
                             <input type="submit" value="Envoyer" />
                         </form>
                 </div>

@@ -39,6 +39,14 @@ function registration($twig, $firstname, $lastname, $nickname, $email, $password
         if ($mailexists == false) {
             $nickexists = $db->req("SELECT * FROM users WHERE nickname='$nickname'")->fetch();
             if ($nickexists == false) {
+                $datatocheck = ['firstname' => $firstname, 'lastname' => $lastname, 'nickname' => $nickname, 'email' => $email];
+                $filters = ['firstname' => 'trim|escape|capitalize', 'lastname' => 'trim|escape|capitalize', 'nickname' => 'trim|escape|lowercase', 'email' => 'trim|escape|lowercase'];
+                $sanitizer  = new Sanitizer($datatocheck, $filters);
+                $dataok = $sanitizer->sanitize();
+                $firstname = $dataok['firstname'];
+                $lastname = $dataok['lastname'];
+                $nickname = $dataok['nickname'];
+                $email = $dataok['email'];
                 $db->req("INSERT INTO users(name, firstname, nickname, email, password, lvl) VALUES ('$lastname', '$firstname', '$nickname', '$email', '$hash', '1')");
                 verification($twig, $nickname, $confirm, $id);
             } else {

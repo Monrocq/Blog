@@ -5,7 +5,10 @@
         "twig/twig": "^2.11",
         "twitter/bootstrap": "v3.3.7",
         "fortawesome/font-awesome": "v4.6.3",
-        "components/jquery": "1.12.4"
+        "components/jquery": "1.12.4",
+        "laravel/framework": "~5.0",
+        "mews/purifier": "~2.0",
+        "waavi/sanitizer": "~1.0"
     },
     "authors": [
         {

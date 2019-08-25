@@ -17,7 +17,11 @@ class Autoloader{
      * @param $class string Le nom de la classe à charger
      */
     static function autoload($class){
+        if ($class == 'Sanitizer') {
+            require 'vendor/waavi/sanitizer/src/' . $class . '.php';
+        } else {
         require 'model/' . $class . '.php';
+        }
     }
 
 }
