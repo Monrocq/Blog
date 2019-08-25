@@ -1,5 +1,7 @@
 # [Start Bootstrap](http://startbootstrap.com/) - [Freelancer](http://startbootstrap.com/template-overviews/freelancer/)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/70ef37dccdfe4ecd83807db8fc6b8bbe)](https://app.codacy.com/app/Monrocq/Blog?utm_source=github.com&utm_medium=referral&utm_content=Monrocq/Blog&utm_campaign=Badge_Grade_Dashboard)
+
 [Freelancer](http://startbootstrap.com/template-overviews/freelancer/) is a one page freelancer portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, and a working PHP contact form.
 
 ## Getting Started
