@@ -10,7 +10,7 @@ class PostManager {
 
     public function getList ($page) {
         $offset = $page * 5 - 5;
-        $list = $this->db->req('SELECT * FROM posts ORDER BY id DESC LIMIT 5 OFFSET '.$offset);
+        $list = $this->db->req("SELECT * FROM posts ORDER BY id DESC LIMIT 5 OFFSET $offset");
         $listPost = array();
         foreach ($list as $key => $dataRow) {
             $postObject = new Post(
