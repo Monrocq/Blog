@@ -17,7 +17,7 @@ function verification($twig, $nickname, $mdp, $id = 0)
         if ((int)$id > 0) {
             header("Location: index.php?action=single&id=$id");
         } else {
-            header('Location: index.php');
+            header('Location: index.php?action=accueil');
         }
     } else {
         echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'fail'));
@@ -27,7 +27,7 @@ function verification($twig, $nickname, $mdp, $id = 0)
 function deconnexion()
 {
     session_destroy();
-    header('Location: index.php');
+    header('Location: index.php?action=accueil');
 }
 
 function registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm, $id)
@@ -201,3 +201,7 @@ function updateComment($id, $comment, $content)
     header($urlcomment);
 }
 
+function error404($twig)
+{
+    echo $twig->render('404.twig');
+}

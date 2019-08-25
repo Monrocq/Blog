@@ -157,7 +157,7 @@ switch ($action) {
         change($role, $user);
         break;
     default:
-        accueil($twig);
+        error404($twig);
 }
 }
 
