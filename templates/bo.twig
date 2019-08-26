@@ -6,7 +6,9 @@
 <div class="row" id="bo">
     <h2>Back-Office</h2><br>
     <div class="col-lg-4">
-        <h3>Ajout de Post</h3><br>
+        <h3>Ajout de Post</h3>
+        {% if session.lvl > 2 %}
+        <br>
         {% if post is same as (false) %}
         <div class="alert alert-danger text-center" role="alert" id="article-added">
             Il existe déjà un article similaire.
@@ -25,6 +27,10 @@
             <textarea name="content" rows="10" cols="100" class="myTextEditor"></textarea><br><br>
             <p id="submit"><input type="submit" /></p><br>
         </form>
+        <h6 class="text-right">Pour <strong>modifier</strong> un post, allez directement le modifier sur le blog.</h6>
+        {% else %}
+        <p class="text-center">Vous n'avez pas encore les droits</p>
+        {% endif %}
     </div>
     <div class="col-lg-4">
         <h3>Approbation commentaires</h3>
