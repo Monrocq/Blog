@@ -13,10 +13,6 @@ $twig = new Twig_Environment($loader, ['cache' => false, 'debug'=>true]);
 $twig->addExtension(new Twig_Extension_Debug);
 $twig->addGlobal('session', $_SESSION);
 
-//Autoloader des classes
-require('autoloader.php');
-Autoloader::register();
-
 //Page d'accueil
 require('controleur/frontend.php');
 
@@ -58,6 +54,10 @@ if (isset($_GET['action'])) {
 } else {
     $action = 'accueil';
 }
+
+//Autoloader des classes
+require('autoloader.php');
+Autoloader::register();
 
 try {
 switch ($action) {

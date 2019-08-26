@@ -18,9 +18,10 @@ class Autoloader{
      */
     static function autoload($class){
         if ($class == 'Sanitizer') {
-            require 'vendor/waavi/sanitizer/src/' . $class . '.php';
+            require_once 'vendor/waavi/sanitizer/src/' . $class . '.php';
         } else {
-        require 'model/' . $class . '.php';
+        $filePath = 'model/' . $class . '.php';
+        require($filePath);
         }
     }
 
