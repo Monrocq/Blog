@@ -68,7 +68,7 @@ switch ($action) {
         if (isset($_GET['commentadded'])) {
             $commentadded = htmlspecialchars($_GET['commentadded']);
         }
-        single($twig, $id, $page, $commentpage, $commentadded = '');
+        single($twig, $id, $page, $commentpage, $commentadded);
         break;
     case 'addcomment':
         $content = htmlspecialchars($_POST['content']);
