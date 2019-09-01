@@ -16,8 +16,10 @@ class Autoloader{
      * Inclue le fichier correspondant à notre classe
      * @param $class string Le nom de la classe à charger
      */
+
     static function autoload($class){
-        require 'model/' . $class . '.php';
+        $filePath = 'model/' . $class . '.php';
+        require_once($filePath);
     }
 
 }

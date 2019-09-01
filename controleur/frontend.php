@@ -17,7 +17,7 @@ function verification($twig, $nickname, $mdp, $id = 0)
         if ((int)$id > 0) {
             header("Location: index.php?action=single&id=$id");
         } else {
-            header('Location: index.php');
+            header('Location: index.php?action=accueil');
         }
     } else {
         echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'fail'));
@@ -27,7 +27,7 @@ function verification($twig, $nickname, $mdp, $id = 0)
 function deconnexion()
 {
     session_destroy();
-    header('Location: index.php');
+    header('Location: index.php?action=accueil');
 }
 
 function registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm, $id)
@@ -39,6 +39,14 @@ function registration($twig, $firstname, $lastname, $nickname, $email, $password
         if ($mailexists == false) {
             $nickexists = $db->req("SELECT * FROM users WHERE nickname='$nickname'")->fetch();
             if ($nickexists == false) {
+                $datatocheck = ['firstname' => $firstname, 'lastname' => $lastname, 'nickname' => $nickname, 'email' => $email];
+                $filters = ['firstname' => 'trim|escape|capitalize', 'lastname' => 'trim|escape|capitalize', 'nickname' => 'trim|escape|lowercase', 'email' => 'trim|escape|lowercase'];
+                $sanitizer  = new Waavi\Sanitizer\Sanitizer($datatocheck, $filters);
+                $dataok = $sanitizer->sanitize();
+                $firstname = $dataok['firstname'];
+                $lastname = $dataok['lastname'];
+                $nickname = $dataok['nickname'];
+                $email = $dataok['email'];
                 $db->req("INSERT INTO users(name, firstname, nickname, email, password, lvl) VALUES ('$lastname', '$firstname', '$nickname', '$email', '$hash', '1')");
                 verification($twig, $nickname, $confirm, $id);
             } else {
@@ -201,3 +209,7 @@ function updateComment($id, $comment, $content)
     header($urlcomment);
 }
 
+function error404($twig)
+{
+    echo $twig->render('404.twig');
+}

@@ -10,7 +10,7 @@ class PostManager {
 
     public function getList ($page) {
         $offset = $page * 5 - 5;
-        $list = $this->db->req('SELECT * FROM posts ORDER BY id DESC LIMIT 5 OFFSET '.$offset);
+        $list = $this->db->req("SELECT * FROM posts ORDER BY id DESC LIMIT 5 OFFSET $offset");
         $listPost = array();
         foreach ($list as $key => $dataRow) {
             $postObject = new Post(
@@ -53,8 +53,12 @@ class PostManager {
     public function addArticle($title, $chapo, $content, $id) {
         $add = $this->db->req(
             "INSERT INTO posts(title, chapo, content, author, date_added) VALUES ('$title', '$chapo', '$content', $id, CURRENT_TIMESTAMP)");
+        if ($add == false) {
+            return false;
+        } else {
         $last = $this->getList(1);
         return $last[0];
+        }
     }
 
     public function deleteArticle($article) {

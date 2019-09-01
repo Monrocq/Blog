@@ -21,7 +21,7 @@ function sendforgot($email_address, $expiration) {
         $mail->Host       = 'smtp.free.fr';  // Specify main and backup SMTP servers
         $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
         $mail->Username   = 'p5oc@free.fr';                     // SMTP username
-        $mail->Password   = 'OpenClassrooms';                               // SMTP password
+        $mail->Password   = '************';                               // SMTP password
         $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
         $mail->Port       = 465;  
 
@@ -73,7 +73,7 @@ function sendConfirmation($nickname) {
         $mail->Host       = 'smtp.free.fr';  // Specify main and backup SMTP servers
         $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
         $mail->Username   = 'p5oc@free.fr';                     // SMTP username
-        $mail->Password   = 'OpenClassrooms';                               // SMTP password
+        $mail->Password   = 'O***C*********';                               // SMTP password
         $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
         $mail->Port       = 465;  
 
