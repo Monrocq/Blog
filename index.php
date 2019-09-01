@@ -67,6 +67,8 @@ switch ($action) {
     case 'single':
         if (isset($_GET['commentadded'])) {
             $commentadded = htmlspecialchars($_GET['commentadded']);
+        } else {
+            $commentadded = 'no';
         }
         single($twig, $id, $page, $commentpage, $commentadded);
         break;

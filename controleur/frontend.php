@@ -41,7 +41,7 @@ function registration($twig, $firstname, $lastname, $nickname, $email, $password
             if ($nickexists == false) {
                 $datatocheck = ['firstname' => $firstname, 'lastname' => $lastname, 'nickname' => $nickname, 'email' => $email];
                 $filters = ['firstname' => 'trim|escape|capitalize', 'lastname' => 'trim|escape|capitalize', 'nickname' => 'trim|escape|lowercase', 'email' => 'trim|escape|lowercase'];
-                $sanitizer  = new Sanitizer($datatocheck, $filters);
+                $sanitizer  = new Waavi\Sanitizer\Sanitizer($datatocheck, $filters);
                 $dataok = $sanitizer->sanitize();
                 $firstname = $dataok['firstname'];
                 $lastname = $dataok['lastname'];

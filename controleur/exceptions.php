@@ -24,3 +24,13 @@ function updateArticle($twig, $title, $chapo, $content, $id)
 {
     return erreur();
 }
+
+function validate($comment) 
+{
+    return erreur();
+}
+
+function change($role, $user)
+{
+    return erreur();
+}
