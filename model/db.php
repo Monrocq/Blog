@@ -1,18 +1,35 @@
 <?php
-
-class db {
-
-    private $db;
-
-    public function __construct() {
-        $this->db = new PDO('mysql:host=localhost;dbname=p5;charset=utf8', 'root', '');
+class Db
+{
+   
+    /**
+     *
+     * @var PDO
+     */
+    private static $_dbInstance;
+    /**
+     * Constructeur
+     */
+    protected function __construct()
+    {
+        if ( is_null(self::$_dbInstance) ) {
+            self::$_dbInstance = new PDO('mysql:host=localhost;dbname=p5;charset=utf8', 'root', '');
+        }
+    }
+    /**
+     * Appel static au connecteur PDO
+     * @return PDO
+     */
+    public static function getInstance() {        
+        if ( is_null(self::$_dbInstance) ) {
+            new Db();
+        }
+        return self::$_dbInstance;
     }
 
-    public function req($req) {
-        $requete = $this->db->query($req);
-        //$requete->setFetchMode(PDO::FETCH_OBJ);
-        //$requete = $requete->fetch();
+    public function query($query) {
+        $requete = self::$_dbInstance->query($query);
+        //$requete->closecuror();
         return $requete;
     }
-
 }

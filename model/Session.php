@@ -6,7 +6,7 @@ class Session {
     private $_nickame;
     
     public function __construct($nickname, $mdp) {
-        $this->db = new db;
+        $this->db = Db::getInstance();
         $this->hydrate($nickname);
         $connected = $this->connexion($nickname, $mdp);
         return $connected;
@@ -24,9 +24,10 @@ class Session {
         $this->setNickname($nickname);
     }
 
+    //Créer la session
     private function connexion($nickname, $mdp) {
         sleep(1);
-        $connexion = $this->db->req("SELECT id, password, lvl FROM users WHERE nickname = '$nickname'");
+        $connexion = $this->db->query("SELECT id, password, lvl FROM users WHERE nickname = '$nickname'");
         $pwd = $connexion->fetch();
         if (password_verify($mdp, $pwd[1])) {
             $_SESSION['connected'] = true;

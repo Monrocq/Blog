@@ -1,15 +1,18 @@
 <?php
 
+//Homeview
 function accueil($twig, $connected = "not") 
 {
     echo $twig->render('homeView.twig', array('titre' => 'Ballinity - Home', 'connected' => $connected));
 }
 
+//Page d'authentification
 function authentification($twig, $id)
 {
     echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'standby', 'id' => $id));
 }
 
+//Création d'une nouvelle session
 function verification($twig, $nickname, $mdp, $id = 0)
 {
     $pwd = new Session($nickname, $mdp);
@@ -24,30 +27,26 @@ function verification($twig, $nickname, $mdp, $id = 0)
     }
 }
 
+//Déconnexion
 function deconnexion()
 {
     session_destroy();
     header('Location: index.php?action=accueil');
 }
 
+//Inscription
 function registration($twig, $firstname, $lastname, $nickname, $email, $password, $confirm, $id)
 {
     if ($password === $confirm) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $db = new db;
-        $mailexists = $db->req("SELECT * FROM users WHERE email='$email'")->fetch();
+        $userMapper = new UserManager;
+        $mailexists = $userMapper->verifMail($email);
         if ($mailexists == false) {
-            $nickexists = $db->req("SELECT * FROM users WHERE nickname='$nickname'")->fetch();
+            $nickexists = $userMapper->verifNick($nickname);
             if ($nickexists == false) {
                 $datatocheck = ['firstname' => $firstname, 'lastname' => $lastname, 'nickname' => $nickname, 'email' => $email];
                 $filters = ['firstname' => 'trim|escape|capitalize', 'lastname' => 'trim|escape|capitalize', 'nickname' => 'trim|escape|lowercase', 'email' => 'trim|escape|lowercase'];
-                $sanitizer  = new Waavi\Sanitizer\Sanitizer($datatocheck, $filters);
-                $dataok = $sanitizer->sanitize();
-                $firstname = $dataok['firstname'];
-                $lastname = $dataok['lastname'];
-                $nickname = $dataok['nickname'];
-                $email = $dataok['email'];
-                $db->req("INSERT INTO users(name, firstname, nickname, email, password, lvl) VALUES ('$lastname', '$firstname', '$nickname', '$email', '$hash', '1')");
+                $userMapper->registration($datatocheck, $filters, $hash);
                 verification($twig, $nickname, $confirm, $id);
             } else {
                 echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'failed', 'failed' => 'nick'));
@@ -60,6 +59,7 @@ function registration($twig, $firstname, $lastname, $nickname, $email, $password
     }
 }
 
+//Envoie d'un mail de réinitialisation de MDP
 function forgot($twig, $email) 
 {
     if(empty($email) 		||
@@ -67,53 +67,36 @@ function forgot($twig, $email)
                 echo "No arguments Provided!";
                 return false;
         }
-    $db = new db;
-    $exists = $db->req("SELECT * FROM users WHERE email = '$email'")->fetch();
-    if ($exists == false) {
-        echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'unknown'));
-    } else {
-    $datetime = new DateTime;
-    $datetime->setTimezone(new DateTimeZone('Europe/Paris'));
-    $datetime->add(new DateInterval('PT02H03M27S'));
-    $expiration = $datetime->format('Y-m-d H:i:s');
-    $db->req("UPDATE users SET reset='$expiration' WHERE email='$email'");
-    sendforgot($email, $expiration);
-    echo $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'known'));
-    
-    }
+    $userMapper = new UserManager;
+    echo $userMapper->forgot($twig, $email);
 }
 
+//Affiche la page de réinitialisation
 function resetpwd($twig, $hashed, $key) 
 {
-    $db = new db;
-    $name = $db->req("SELECT firstname, nickname FROM users WHERE password = '$hashed'")->fetch();
-    $expiration = $db->req("SELECT reset FROM users WHERE nickname='{$name[1]}'")->fetch();
-    if ((hash('sha256', $expiration[0]) == $key) && ($expiration[0] > date("Y-m-d H:i:s"))) {
-        echo $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name[0], 'state' => 'standby', 'nickname' => $name[1]));
-    } else {
-        echo "Oups, ce lien n'est plus valide";
-    }
+    $userMapper = new UserManager;
+    echo $userMapper->resetPwd($twig, $hashed, $key);
 }
 
+//Validation du formulaire de changement de MDP
 function reseted($twig, $mdp, $confirm, $nickname, $hashed, $name)
 {
     if ($mdp !== $confirm) {
         echo $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name, 'state' => 'fail', 'nickname' => $nickname));
     } else {
-        $db = new db;
-        $ok = $db->req("SELECT password FROM users WHERE nickname = '$nickname'")->fetch();
+        $userMapper = new UserManager;
+        $ok = $userMapper->backupPwd($nickname);
         if ($ok[0] === $hashed) {
-            $newhashed = password_hash($confirm, PASSWORD_DEFAULT);
-            $replace = $db->req("UPDATE users SET password='$newhashed' WHERE nickname='$nickname'");
+            $userMapper->boum($nickname, $confirm);
             sendConfirmation($nickname);
             verification($twig, $nickname, $mdp);
             } else {
             echo "Vous avez déjà réinitialisé votre mot de passe, recommencez l'opération si vous l'avez encore oublié";
-
         }
     }
 }
 
+//Liste les articles
 function liste($twig, $page = 1) 
 {
     $postMapper = new PostManager;
@@ -137,6 +120,7 @@ function pagination($nb) {
     return $pages;
 }
 
+//La page d'un article seul
 function single($twig, $id, $page = 1, $commentpage = 1, $commentadded = '')
 {
     setcookie('page', $page); //Pour éviter de se trimbaler $page à chaque fois qu'on CRUD un commentaire
@@ -158,6 +142,7 @@ function single($twig, $id, $page = 1, $commentpage = 1, $commentadded = '')
     ));
 }
 
+//Ajoute un commentaire
 function addComment($id, $content) 
 {
     $commentMapper = new CommentManager;
@@ -185,6 +170,7 @@ function urlcomment($id, $comment, $type) {
     return "Location: index.php?action=single&id=$id&commentadded=$commentadded#comment$comment";
 }
 
+//Supprime un commentaire
 function deleteComment($id = 0, $comment)
 {
     $commentMapper = new CommentManager;
@@ -196,10 +182,9 @@ function deleteComment($id = 0, $comment)
     } else {
         header('Location: index.php?action=bo');
     }
-    
-    //var_dump($delete);
 }
 
+//MAJ un commentaire
 function updateComment($id, $comment, $content)
 {
     $commentMapper = new CommentManager;
@@ -209,6 +194,7 @@ function updateComment($id, $comment, $content)
     header($urlcomment);
 }
 
+//Page default d'une 404
 function error404($twig)
 {
     echo $twig->render('404.twig');

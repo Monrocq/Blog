@@ -1,5 +1,7 @@
 <?php 
 
+//Un objet Comment = Un commentaire
+
 class Comment {
     
     private $_id;

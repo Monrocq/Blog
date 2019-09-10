@@ -1,5 +1,7 @@
 <?php
 
+//Permet de mettre les Utilisateurs sous forme d'objet pour plus facilement les manipuler dans le BO
+
 class User {
 
 	private $_id;

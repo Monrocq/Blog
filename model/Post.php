@@ -1,5 +1,7 @@
 <?php
 
+//Un objet Post = Un article
+
 class Post {
 
     private $_id;
@@ -90,6 +92,7 @@ class Post {
 		$this->setNbComments($nbcomments);
 	}
 	
+	//Récupére les commentaires rattachés au Post
 	public function getComments($commentpage) {
 		$commentMapper = new CommentManager;
 		return $commentMapper->getComments($this->getId(), $commentpage);

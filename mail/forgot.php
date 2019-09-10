@@ -12,7 +12,7 @@ function sendforgot($email_address, $expiration) {
     // Instantiation and passing `true` enables exceptions
     $mail = new PHPMailer(true);
     $db = new db;
-    $req = $db->req("SELECT password, nickname FROM users WHERE email='$email_address'")->fetch();
+    $query = $db->query("SELECT password, nickname FROM users WHERE email='$email_address'")->fetch();
 
     try {
         //Server settings
@@ -27,7 +27,7 @@ function sendforgot($email_address, $expiration) {
 
     //Recipients
     $mail->setFrom('p5oc@free.fr', 'Ballinity');
-    $mail->addAddress($email_address, $req[1]);     // Add a recipient
+    $mail->addAddress($email_address, $query[1]);     // Add a recipient
     //$mail->addAddress('ellen@example.com');               // Name is optional
     $mail->addReplyTo('no_reply@free.fr', 'NO REPLY');
     $mail->addCC('cc@example.com');
@@ -39,8 +39,8 @@ function sendforgot($email_address, $expiration) {
     // Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Reinitialisation du mot de passe';
-    $url = "http://localhost/P5/Blog/index.php?action=reset&hashed={$req[0]}&key=$key";
-    $mail->Body    = "Bonjour <strong>{$req[1]}</strong>,<br><br>Veuillez cliquez sur ce lien pour réinitialiser votre mot de passe : <a href=\"$url\">$url</a><br>Attention il expirera dans deux heures!<br><br>Cordialement.";
+    $url = "http://localhost/P5/Blog/index.php?action=reset&hashed={$query[0]}&key=$key";
+    $mail->Body    = "Bonjour <strong>{$query[1]}</strong>,<br><br>Veuillez cliquez sur ce lien pour réinitialiser votre mot de passe : <a href=\"$url\">$url</a><br>Attention il expirera dans deux heures!<br><br>Cordialement.";
     //$mail->AltBody = $message."\nNuméro de téléphone : $phone";
 
     //Encoding
@@ -64,7 +64,7 @@ function sendConfirmation($nickname) {
     // Instantiation and passing `true` enables exceptions
     $mail = new PHPMailer(true);
     $db = new db;
-    $email = $db->req("SELECT email FROM users WHERE nickname='$nickname'")->fetch();
+    $email = $db->query("SELECT email FROM users WHERE nickname='$nickname'")->fetch();
 
     try {
         //Server settings

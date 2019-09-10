@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 25 août 2019 à 20:31
+-- Généré le :  mar. 10 sep. 2019 à 22:39
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `auteur` (`author`),
   KEY `auteur_2` (`author`),
   KEY `post` (`post`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `comments`
@@ -53,7 +53,6 @@ INSERT INTO `comments` (`id`, `author`, `post`, `content`, `date_added`, `last_m
 (16, 1, 6, 'Test encore', '2019-08-12', NULL, 1),
 (18, 1, 6, 'Et again', '2019-08-12', NULL, 1),
 (20, 1, 5, 'Test', '2019-08-12', NULL, 1),
-(21, 1, 2, 'Hey', '2019-08-12', NULL, 1),
 (22, 1, 6, 'Hey, bien? Oui sur? Mais oui, lourd', '2019-08-13', NULL, 1),
 (23, 1, 6, 'Yo, bien? trkl yep', '2019-08-13', NULL, 1),
 (24, 1, 6, 'xd, rien de drole', '2019-08-13', NULL, 1),
@@ -71,13 +70,17 @@ INSERT INTO `comments` (`id`, `author`, `post`, `content`, `date_added`, `last_m
 (41, 1, 6, 'Yeahh', '2019-08-13', NULL, 1),
 (42, 1, 6, 'Encore?', '2019-08-13', NULL, 1),
 (43, 6, 1, 'Hey', '2019-08-16', NULL, 1),
-(44, 1, 6, 'Oui', '2019-08-18', NULL, 1),
 (46, 1, 3, 'Test', '2019-08-23', NULL, 1),
 (47, 7, 31, 'yo', '2019-08-25', NULL, 1),
 (48, 7, 31, 'Yo', '2019-08-25', NULL, 1),
 (49, 7, 31, 'Hello\r\n', '2019-08-25', NULL, 1),
 (50, 7, 1, 'ça va?', '2019-08-25', NULL, 1),
-(51, 1, 31, 'trql', '2019-08-25', NULL, 1);
+(51, 1, 31, 'trql', '2019-08-25', NULL, 1),
+(52, 6, 31, 'Hello', '2019-08-29', NULL, 1),
+(53, 6, 31, 'Hello', '2019-08-29', NULL, 1),
+(54, 1, 35, 'Yo', '2019-09-01', NULL, 1),
+(55, 1, 35, 'hello', '2019-09-01', NULL, 0),
+(56, 6, 2, 'Bonjour', '2019-09-08', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -109,7 +112,7 @@ INSERT INTO `posts` (`id`, `title`, `chapo`, `content`, `author`, `date_added`, 
 (3, 'Tres', 'Chiffre trois', 'Ceci est le chiffre trois', 1, '2019-07-31', NULL),
 (4, 'Quatro', 'Le chiffre quatre', 'Ceci est le chiffre quatre', 1, '2019-07-31', NULL),
 (5, 'Cinquo', 'Le chiffre cinq', 'Ceci est le chiffre cinq', 1, '2019-07-31', NULL),
-(6, 'Seis', 'Le chiffre six', 'Ceci est le chiffre six', 1, '2019-07-31', NULL),
+(6, 'Seis', 'Le chiffre Six', '&lt;p&gt;Ceci est le chiffre six&lt;/p&gt;', 1, '2019-07-31', '2019-09-11'),
 (7, 'Sept', 'Ceci est 7', 'Je test le chiffre 7', 1, '2019-08-22', NULL),
 (25, 'Huit', 'Ocho', 'HUITO Nop, sur?', 1, '2019-08-22', '2019-08-23'),
 (30, '10', 'la dizaine', 'le nombre dix', 6, '2019-08-24', NULL),
@@ -137,18 +140,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `nickname` (`nickname`),
   UNIQUE KEY `password` (`password`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `firstname`, `nickname`, `email`, `password`, `lvl`, `sign_up`, `reset`) VALUES
-(1, 'Adel', 'Malik', 'lemineurdu35', 'adel_98@hotmail.fr', '$2y$10$Ihl8OX4vX0LcabKNmPHPIunw3BZ.FtVR3/Np3Y48/Yo3ayM3YH0dm', '3', '2019-07-31 17:16:13', '2019-08-22 20:04:55'),
+(1, 'Adel', 'Malik', 'lemineurdu35', 'adel_98@hotmail.fr', '$2y$10$Ihl8OX4vX0LcabKNmPHPIunw3BZ.FtVR3/Np3Y48/Yo3ayM3YH0dm', '3', '2019-07-31 17:16:13', '2019-09-10 18:44:43'),
 (3, '', 'maryne', 'sole', 'jskqljd@dkd.fr', '$2y$10$m04naeFbgpjzxPerg/GIQekIx4XcPPVPlxBtkoHbVaw8lUK5XTbg2', '0', '2019-08-14 13:02:21', NULL),
 (5, 'jfdisfj', 'ddskok', 'jfskdf', 'jkds@lol.fr', '$2y$10$YTqYhHCTw/tbWaG6rn0Ezel8PB4vkAnHiJJxQnec6xDUx7vokaVY6', '1', '2019-08-14 13:23:50', '2019-08-14 20:46:40'),
 (6, 'test', 'test', 'theminororof35', 'adelemineur@gmail.com', '$2y$10$S7GejavoX.MNh5kK7FOk8OozDHuaZayUOm972fHGx99POCrM/l1Zu', '2', '2019-08-16 12:28:08', NULL),
-(7, 'Malik', 'Adel', 'monrocq', 'marinmalouin@hotmail.fr', '$2y$10$lhyZssZUVOgnq8MKDE9C.OSlFzlajKggPzFMbejJ4ZUAXCowqR9g.', '1', '2019-08-25 20:16:22', NULL);
+(7, 'Malik', 'Adel', 'monrocq', 'marinmalouin@hotmail.fr', '$2y$10$lhyZssZUVOgnq8MKDE9C.OSlFzlajKggPzFMbejJ4ZUAXCowqR9g.', '1', '2019-08-25 20:16:22', NULL),
+(8, 'Uzumaki', 'Naruto', 'datebayo', 'datebayo@google.fr', '$2y$10$3G0o3JceOsz5d/EOZQLOoeUcINGbDavS3EV/lONl4DZH53RBCir3W', '1', '2019-08-26 12:51:05', NULL),
+(9, 'Malik-monrocq', 'Adel', 'jidsklql', 'jndsk@fdnsklcw.fr', '$2y$10$6tjCowf.lXquwGjtNicktOCO.5rCoBdjgQyWkK3DAk0i5OBNPMWhq', '1', '2019-08-30 12:11:32', NULL),
+(10, 'Sqdcqsd', 'Dscsqfsqdq', 'qzsddfqs', 'dfsij@gjokfdl.fr', '$2y$10$.Eaw5A3aZ4pH.sHD1bgoMOdGQ3JdsPtjSd3lUZUbX0aDS1cdjdMuK', '1', '2019-08-30 12:27:47', NULL),
+(11, 'Uchiwa', 'Sasuke', 'saske', 'sasuke@du35.fr', '$2y$10$LsoarQ1d9HrSGIXUABkZKuXmXazR7pjJ2jobzQRC9iaaEB/0DQ5rm', '1', '2019-09-01 10:25:06', NULL),
+(12, 'Haruno', 'Sakura', 'sakura', 'sakura@hotmail.fr', '$2y$10$gtBwvz80iqMoi/hnuUNx/O8RU/.tNB6TqcxDxpspeLql7qRRx3dZO', '1', '2019-09-10 16:40:38', NULL),
+(13, 'Admin', 'Admin', 'admin', 'admin@admin.fr', '$2y$10$4PH5pMm64ukXpFdS.uV1A.xUbRcIOb6WxW.9s.wAPKil8R2dzlKy2', '3', '2019-09-10 23:36:18', NULL),
+(14, 'Modo', 'Modo', 'modo', 'modo@modo.fr', '$2y$10$VzSYpkaUGX0PXF71JvHZxO3yVguehkmQ5abeQhlXJ7qX3IwvQ796K', '2', '2019-09-10 23:36:48', NULL);
 
 --
 -- Contraintes pour les tables déchargées

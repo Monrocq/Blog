@@ -2,7 +2,7 @@
 
 {% block content %}
 
-
+{# Ajout de post #}
 <div class="row" id="bo">
     <h2>Back-Office</h2><br>
     <div class="col-lg-4">
@@ -32,6 +32,7 @@
         <p class="text-center">Vous n'avez pas encore les droits</p>
         {% endif %}
     </div>
+    {# Approbation de commentaire #}
     <div class="col-lg-4">
         <h3>Approbation commentaires</h3>
         {% if comments == false %}
@@ -56,6 +57,7 @@
             {% endfor %}
         </div>
     </div>
+    {# Gestion des utilisateurs #}
     <div class="col-lg-4">
         <h3>Gestion des utilisateurs</h3>
         {% if session.lvl > 2 %}

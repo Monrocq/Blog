@@ -1,4 +1,6 @@
 <?php
+//Controlleur de substitut pour les utilisateurs qui ne sont pas autorisés à accéder au BO;
+//Reprend les mêmes functions du BO pour les réadapté en erreur
 
 function erreur() 
 {

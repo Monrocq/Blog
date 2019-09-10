@@ -16,7 +16,7 @@
                 </button>
             </h2>
             </div>
-
+            {# Connexion #}
             <div id="collapseOne" class="collapse {% if (auth != 'known') and (auth != 'unknown') %}show{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     {% if session.connected == false %}
@@ -47,6 +47,7 @@
                 </div>
             </div>
         </div>
+        {# Inscription #}
         {% if session.connected == false %}
         <div class="card">
             <div class="card-header" id="headingTwo">
@@ -74,18 +75,30 @@
                     {% endif %}
                    <form method="post" action="index.php?action=register&id={{id}}">
                     <div id="sign-up">
-                        <label for="firstname">Prénom :</label>
-                        <input required type="text" name="firstname" />
-                        <label for="surname">Nom de famille :</label>
-                        <input required type="text" name="surname" />
-                        <label for="nickname">Pseudo :</label>
-                        <input required type="text" name="nickname" />
-                        <label for="email">Adresse mail :</label>
-                        <input required type="email" name="email" />
-                        <label for="mdp">Définissez un mot de passe :</label>
-                        <input required type="password" name="mdp" pattern=".{6,}" title="6 caractères minimum"/>
-                        <label for="confirm">Confirmez le mot de passe :</label>
-                        <input required type="password" name="confirm" />
+                        <div class="form-group">
+                            <label for="firstname">Prénom :</label>
+                            <input required type="text" name="firstname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Nom de famille :</label>
+                            <input required type="text" name="surname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="nickname">Pseudo :</label>
+                            <input required type="text" name="nickname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Adresse mail :</label>
+                            <input required type="email" name="email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="mdp">Définissez un mot de passe :</label>
+                            <input required type="password" name="mdp" pattern=".{6,}" title="6 caractères minimum"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm">Confirmez le mot de passe :</label>
+                            <input required type="password" name="confirm" />
+                        </div>
                     </div>
                     <p id="submit"><input required type="submit"/></p>
                    </form>
@@ -96,18 +109,30 @@
                 <div class="card-body">
                    <form method="post" action="index.php?action=register">
                     <div id="sign-up">
-                        <label for="firstname">Prénom :</label>
-                        <input required type="text" name="firstname" />
-                        <label for="surname">Nom de famille :</label>
-                        <input required required type="text" name="surname" />
-                        <label for="nickname">Pseudo :</label>
-                        <input required type="text" name="nickname" />
-                        <label for="email">Adresse mail :</label>
-                        <input required type="email" name="email" />
-                        <label for="mdp">Définissez un mot de passe :</label>
-                        <input required type="password" name="mdp" />
-                        <label for="confirm">Confirmez le mot de passe :</label>
-                        <input required type="password" name="confirm" />
+                        <div class="form-group">
+                            <label for="firstname">Prénom :</label>
+                            <input required type="text" name="firstname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Nom de famille :</label>
+                            <input required type="text" name="surname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="nickname">Pseudo :</label>
+                            <input required type="text" name="nickname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Adresse mail :</label>
+                            <input required type="email" name="email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="mdp">Définissez un mot de passe :</label>
+                            <input required type="password" name="mdp" pattern=".{6,}" title="6 caractères minimum"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm">Confirmez le mot de passe :</label>
+                            <input required type="password" name="confirm" />
+                        </div>
                     </div>
                     <p id="submit"><input required type="submit"/></p>
                    </form>
@@ -115,6 +140,7 @@
             </div>
             {% endif %}
         </div>
+        {# Réinitialisation de MDP #}
         <div class="card">
             <div class="card-header" id="headingThree">
             <h5 class="mb-0">

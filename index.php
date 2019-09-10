@@ -16,19 +16,21 @@ $twig->addGlobal('session', $_SESSION);
 //Page d'accueil
 require('controleur/frontend.php');
 
+//Affecte une valeur de visiteur pour la gestion de visualisation de contenue
 if (isset($_SESSION['connected'])) {
     $lvl = $_SESSION['lvl'];
 } else {
-    $lvl = 1;
+    $lvl = 0;
 }
 
+//Prédit dès le départ par mesure de sécurité les fonctions qu'il pourra ou non utiliser
 if ($lvl > 1) {
     require('controleur/backend.php');
 } else {
     require('controleur/exceptions.php');
 }
 
-
+//Récupére les paramètres nécessaires pour la bonne naviguabilité
 if (isset($_GET['action'])) {
     $action = htmlspecialchars($_GET['action']);
     if (isset($_GET['page'])) {
@@ -59,6 +61,7 @@ if (isset($_GET['action'])) {
 require('autoloader.php');
 Autoloader::register();
 
+//Le coeur du routeur
 try {
 switch ($action) {
     case 'articles':

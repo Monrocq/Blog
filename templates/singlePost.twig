@@ -124,7 +124,7 @@
             {% if session.nickname == comment.getAuthor or session.lvl in [2, 3] or session.nickname == article.getAuthor %}
             <!-- Bonton suppression -->
             <a class="btn btn-danger" href="index.php?action=deletecomment&comment={{comment.getId}}&id={{id}}">
-                Supprimer le commentaire
+                Supprimer
             </a>
             {% endif %}
         </div>

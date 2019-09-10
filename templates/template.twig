@@ -74,13 +74,22 @@
                         <a href="index.php?action=articles">Blog</a>
                     </li>
                     <li>
-                        <a href="index.php?action=authentification" id="status">Statut : 
                             {% if session.connected == true %}
-                                <span id="connected">Connecté</span>
+                                <a id="status" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a class='btn btn-danger' href='index.php?action=deconnexion'>
+                                    Deconnexion
+                                </a>" href="#">
+                                    Statut :
+                                    <span id="connected">Connecté</span>
+                                </a>
                             {% else %}
-                                <span>Non connecté</span>
+                                <a id="status" href="index.php?action=authentification">
+                                    Statut :
+                                    <span>Non connecté</span>
+                                </a>
                             {% endif %}
                         </a>
+                    </li>
+                    <li>
                     </li>
                 </ul>
             </div>
@@ -718,6 +727,13 @@
 
     <!-- Theme JavaScript -->
     <script src="public/js/freelancer.min.js"></script>
+
+    <!-- Popovers déco -->
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();   
+        });
+    </script>
 
 </body>
 

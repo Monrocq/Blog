@@ -1,5 +1,6 @@
 <?php
 
+//Affiche le BO
 function bo($twig)
 {
     $commentMapper = new CommentManager;
@@ -12,6 +13,7 @@ function bo($twig)
     echo $twig->render('bo.twig', array('id' => $id, 'comments' => $comments, 'groups' => $groups));
 }
 
+//Quand l'article est ajouté
 function addArticle($twig, $title, $chapo, $content, $id)
 {
     $postMapper = new PostManager;
@@ -19,6 +21,7 @@ function addArticle($twig, $title, $chapo, $content, $id)
     echo $twig->render('bo.twig', array('id' => $id, 'post' => $newpost));
 }
 
+//Pour la suppression d'article
 function deleteArticle($twig, $article)
 {
     $postMapper = new PostManager;
@@ -26,6 +29,7 @@ function deleteArticle($twig, $article)
     header('Location: index.php?action=articles');
 }
 
+//Pour la MAJ d'un article
 function updateArticle($twig, $title, $chapo, $content, $id) 
 {
     $postMapper = new PostManager;
@@ -33,6 +37,7 @@ function updateArticle($twig, $title, $chapo, $content, $id)
     header("Location: index.php?action=single&id=$id");
 }
 
+//Pour approuver un commentaire
 function validate($comment)
 {
     $commentMapper = new CommentManager;
@@ -40,6 +45,7 @@ function validate($comment)
     header('Location: index.php?action=bo');
 }
 
+//Pour modifier le statut d'un utilisateur
 function change($role, $user)
 {
     $userMapper = new UserManager;

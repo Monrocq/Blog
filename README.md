@@ -25,6 +25,14 @@ Afin d'installer le projet sur votre machine, vous pouvez procéder ainsi :
 * Change the line of files at $mail->Username & $mail->Password with your own SMTP config on \mail/ folder
 * Import jeux_de_donnees.sql on your database and, if it's necessary, config the PDO statement at model/db.php
 
+## Exemple Users
+
+You can use this account :
+* Admin -> id : admin / pwd : admin
+* Modo -> id : modo / pwd : modo
+* Member -> Register new account
+* Visitor -> Don't connect you
+
 ## Code Quality
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Monrocq/Blog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Monrocq/Blog/?branch=master)

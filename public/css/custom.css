@@ -206,18 +206,27 @@ textarea {
     font-size: 1em;
     margin-left: 50px;
 }
-
+/*
 #sign-up {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-left: 20%;
 }
+*/
+
+#sign-up {
+    max-width: 40%;
+    margin-left: 10%;
+    margin-top: 2%;
+}
 
 #sign-up input {
-    min-width: 30%;
-    margin: auto;
+    float: right;
+    margin: 0;
+    min-width: 40%;
 }
+
 
 #submit {
     font-size: 1.5rem;
