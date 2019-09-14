@@ -32,4 +32,14 @@ class Db
         //$requete->closecuror();
         return $requete;
     }
+
+    public function prepare($query) {
+        $requete = self::$_dbInstance->prepare($query);
+        return $requete;
+    }
+
+    public function execute($query) {
+        $requete = self::$_dbInstance->execute($query);
+        return $requete;
+    }
 }

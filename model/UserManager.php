@@ -64,17 +64,22 @@ class UserManager {
 
     //Change le rôle d'un utilisateur
     public function change($role, $user) {
-        $this->db->query("UPDATE users SET lvl = '$role' WHERE id = $user");
+        $newLvl = $this->db->prepare("UPDATE users SET lvl = :role WHERE id = :user");
+        $newLvl->bindParam(':role', $role, PDO::PARAM_STR);
+        $newLvl->bindParam(':user', $user, PDO::PARAM_INT);
+        $newLvl->execute();
     }
 
     //Vérifie si le mail d'un utilisateur existe déjà
     public function verifMail($email) {
-        return $this->db->query("SELECT * FROM users WHERE email='$email'")->fetch();
+        $verif = $this->db->prepare("SELECT * FROM users WHERE email=?")->fetch();
+        return $verif->execute(array($email));
     }
 
     //Vérifie si le pseudo est déjà utilisé
     public function verifNick($nickname) {
-        return $this->db->query("SELECT * FROM users WHERE nickname='$nickname'")->fetch();
+        $verif = $this->db->query("SELECT * FROM users WHERE nickname=:nickname")->fetch();
+        return $verif->execute(array(':nickname' => $nickname));
     }
 
     //Inscrits un visiteur
@@ -90,7 +95,7 @@ class UserManager {
 
     //Envoie le mail de réinitialisation
     public function forgot($twig, $email) {
-        $exists = $this->db->query("SELECT * FROM users WHERE email = '$email'")->fetch();
+        $exists = $this->db->prepare("SELECT * FROM users WHERE email = ?")->execute(array($email))->fetch();
         if ($exists == false) {
             return $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'unknown'));
         } else {
@@ -98,7 +103,7 @@ class UserManager {
         $datetime->setTimezone(new DateTimeZone('Europe/Paris'));
         $datetime->add(new DateInterval('PT02H03M27S'));
         $expiration = $datetime->format('Y-m-d H:i:s');
-        $this->db->query("UPDATE users SET reset='$expiration' WHERE email='$email'");
+        $this->db->prepare("UPDATE users SET reset = :expiration WHERE email = :email ")->execute(array(':expiration' => $expiration, ':email' => $email));
         sendforgot($email, $expiration);
         return $twig->render('authentification.twig', array('titre' => 'Ballinity - Authentification', 'auth' => 'known'));
         }
@@ -106,7 +111,7 @@ class UserManager {
 
     //Affiche la page de réinitialisation
     public function resetPwd($twig, $hashed, $key) {
-        $name = $this->db->query("SELECT firstname, nickname FROM users WHERE password = '$hashed'")->fetch();
+        $name = $this->db->prepare("SELECT firstname, nickname FROM users WHERE password = ?")->execute(array($hashed))->fetch();
         $expiration = $db->query("SELECT reset FROM users WHERE nickname='{$name[1]}'")->fetch();
         if ((hash('sha256', $expiration[0]) == $key) && ($expiration[0] > date("Y-m-d H:i:s"))) {
             return $twig->render('reset.twig', array('hashed' => $hashed, 'name' => $name[0], 'state' => 'standby', 'nickname' => $name[1]));
@@ -117,12 +122,12 @@ class UserManager {
 
     //Récupére le mot de passe hashé correspondant à l'utilisateur
     public function backupPwd($nickname) {
-        return $this->db->query("SELECT password FROM users WHERE nickname = '$nickname'")->fetch();
+        return $this->db->query("SELECT password FROM users WHERE nickname = ?")->execute(array($nickname))->fetch();
     }
 
     //Change le mot de passe
     public function boum($nickname, $confirm) {
         $newhashed = password_hash($confirm, PASSWORD_DEFAULT);
-        return $this->db->query("UPDATE users SET password='$newhashed' WHERE nickname='$nickname'");
+        return $this->db->prepare("UPDATE users SET password = :newhashed WHERE nickname = :nickname")->execute(array(':newhashed' => $newhashed, ':nickname' => $nickname));
     }
 }

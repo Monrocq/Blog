@@ -11,7 +11,9 @@ class PostManager {
     //Récupere la liste des articles
     public function getList ($page) {
         $offset = $page * 5 - 5;
-        $list = $this->db->query("SELECT * FROM posts ORDER BY id DESC LIMIT 5 OFFSET $offset");
+        $list = $this->db->prepare("SELECT * FROM posts ORDER BY id DESC LIMIT 5 OFFSET :offset");
+        $list->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $list->execute();
         $listPost = array();
         foreach ($list as $key => $dataRow) {
             $postObject = new Post(
@@ -35,9 +37,11 @@ class PostManager {
 
     //Récupere un article en particulier
     public function getArticle ($id) {
-        $query = $this->db->query(
+        $query = $this->db->prepare(
             "SELECT posts.id, posts.title, posts.chapo, posts.content, posts.date_added, posts.last_updated, users.nickname 
-            FROM posts JOIN users ON posts.author = users.id WHERE posts.id = $id");
+            FROM posts JOIN users ON posts.author = users.id WHERE posts.id = :id");
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
         $article = $query->fetch();
         $commentMapper = new CommentManager;
         $nbcomments = $commentMapper->getNbComments($id);
@@ -55,8 +59,13 @@ class PostManager {
 
     //Ajoute un article
     public function addArticle($title, $chapo, $content, $id) {
-        $add = $this->db->query(
-            "INSERT INTO posts(title, chapo, content, author, date_added) VALUES ('$title', '$chapo', '$content', $id, CURRENT_TIMESTAMP)");
+        $add = $this->db->prepare(
+            "INSERT INTO posts(title, chapo, content, author, date_added) VALUES (':title', ':chapo', ':content', :id, CURRENT_TIMESTAMP)");
+        $add->bindParam(':id', $id, PDO::PARAM_INT);
+        $add->bindParam(':title', $title, PDO::PARAM_STR);
+        $add->bindParam(':chapo', $chapo, PDO::PARAM_STR);
+        $add->bindParam(':content', $content, PDO::PARAM_STR);
+        $add->execute(array(':title' => $title, ':chapo' => $chapo, ':content' => $content));
         if ($add == false) {
             return false;
         } else {
@@ -67,15 +76,16 @@ class PostManager {
 
     //Supprime l'article
     public function deleteArticle($article) {
-        $this->db->query(
-            "DELETE FROM posts WHERE id=$article");
+        $this->db->prepare("DELETE FROM posts WHERE id=?")->execute(array($id));
     }
 
     //MAJ l'article
     public function updateArticle($title, $chapo, $content, $id) {
-        $this->db->query(
-            "UPDATE posts SET title='$title', chapo='$chapo', content='$content', last_updated=CURRENT_TIMESTAMP WHERE id=$id"
+        $maj = $this->db->prepare(
+            "UPDATE posts SET title=':title', chapo=':chapo', content=':content', last_updated=CURRENT_TIMESTAMP WHERE id=:id"
         );
+        $maj->bindParam(':id', $id, PDO::PARAM_INT);
+        $maj->execute(array(':title' => $title, ':chapo' => $chapo, ':content' => $content));
     }
 
 }

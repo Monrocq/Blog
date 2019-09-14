@@ -27,7 +27,8 @@ class Session {
     //Créer la session
     private function connexion($nickname, $mdp) {
         sleep(1);
-        $connexion = $this->db->query("SELECT id, password, lvl FROM users WHERE nickname = '$nickname'");
+        $connexion = $this->db->prepare("SELECT id, password, lvl FROM users WHERE nickname = :nickname");
+        $connexion->execute(array(':nickname' => $nickname));
         $pwd = $connexion->fetch();
         if (password_verify($mdp, $pwd[1])) {
             $_SESSION['connected'] = true;
