@@ -27,7 +27,7 @@ Afin d'installer le projet sur votre machine, vous pouvez procéder ainsi :
 
 ## Exemple Users
 
-You can use this account :
+You can use this accounts :
 * Admin -> id : admin / pwd : admin
 * Modo -> id : modo / pwd : modo
 * Member -> Register new account
